@@ -1,0 +1,14 @@
+Name:	    Alex McNurlin
+Date:	    Tue Sep  8 12:35:05 PDT 2015
+Assignment: 2.1
+
+2)
+	If you enter 5 and 17, the program outputs a sum of 22 and average of 11.
+	If you enter 6 and 17, the program outputs a sum of 23 and average of 11.
+	If you enter 4.5 and 5.5, the program breaks and outputs the results of "4" and "0", with a sum of 4 and an average of 2.
+
+4)
+	If you enter 5 and 17, the program outputs a sum of 22 and average of 11.
+	If you enter 6 and 17, the program outputs a sum of 23 and average of 11.5.
+	If you enter 4.5 and 5.5, the program outputs a sum of 10 and average of 5.
+ 

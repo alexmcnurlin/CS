@@ -1,0 +1,71 @@
+Name: Alex McNurlin
+Section: CS120-04
+Lab #3
+Date: Tue Sep 15 13:00:30 PDT 2015
+------------------------------------------------------------------------------
+
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+	float a, b, c;
+	const float pi = 3.14159;
+	cout << "Enter radius a for the ellipse: " << flush;
+	cin >> a;
+	cout << "Enter radius b for the ellipse: " << flush;
+	cin >> b;
+
+  // Validation
+  if (!(a > 0) || !(b > 0)) {
+    cout << "\nThe inputs are invalid. Please make sure they're both positive numbers. \nexiting...\n\n" << endl;
+    return 0;
+  }
+  
+  if (a == b) {
+    cout << "Your ellipse is a circle!" << endl;
+    c = 2 * pi * sqrt( (a*a + b*b)/2 );
+    cout << "The circumference of the circle is: " << c << "\n\n";
+    return 0;
+  }
+
+	c = 2 * pi * sqrt( (a*a + b*b)/2 );
+	cout << "The circumference of the ellipse is: " << c << "\n\n";
+  return 0;
+}
+
+
+Script started on Tue 15 Sep 2015 12:57:41 PM PDT
+[?1034hbash-4.1$ exit./lab3 
+Enter radius a for the ellipse: 9.23
+Enter radius b for the ellipse: 6
+The circumference of the ellipse is: 48.9106
+
+bash-4.1$ ./lab3 
+Enter radius a for the ellipse: -9
+Enter radius b for the ellipse: 5
+
+The inputs are invalid. Please make sure they're both positive numbers. 
+exiting...
+
+
+bash-4.1$ ./lab3 
+Enter radius a for the ellipse: 5
+Enter radius b for the ellipse: 5
+Your ellipse is a circle!
+The circumference of the circle is: 31.4159
+
+bash-4.1$ ./lab3 
+Enter radius a for the ellipse: four    6
+Enter radius b for the ellipse: four
+
+The inputs are invalid. Please make sure they're both positive numbers. 
+exiting...
+
+
+bash-4.1$ exit
+exit
+
+Script done on Tue 15 Sep 2015 12:58:29 PM PDT

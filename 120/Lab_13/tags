@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+add	lab13.cpp	/^void add(robot *robots, int RobotNumber, char RobotType, char* RobotManufacturer) {$/;"	f
+add	robots.cpp	/^void robot::add(int RobotNumber, char RobotType, char* RobotManufacturer) {$/;"	f	class:robot
+dispatch	lab13.cpp	/^int dispatch(robot *robots, char type, int quadrant) {$/;"	f
+id	lab13.cpp	/^    int id;$/;"	m	struct:robot	file:
+id	robots.h	/^    int id;$/;"	m	struct:robot
+main	lab13.cpp	/^int main() {$/;"	f
+manufacturer	lab13.cpp	/^    char manufacturer[64];$/;"	m	struct:robot	file:
+manufacturer	robots.h	/^    char manufacturer[64];$/;"	m	struct:robot
+next	lab13.cpp	/^    robot *next;$/;"	m	struct:robot	file:
+next	robots.h	/^    robot *next;$/;"	m	struct:robot
+num_deployments	lab13.cpp	/^    int num_deployments;$/;"	m	struct:robot	file:
+num_deployments	robots.h	/^    int num_deployments;$/;"	m	struct:robot
+quadrant	lab13.cpp	/^    int quadrant;$/;"	m	struct:robot	file:
+quadrant	robots.h	/^    int quadrant;$/;"	m	struct:robot
+retrieve	lab13.cpp	/^int retrieve(robot *robots, char type, int quadrant) {$/;"	f
+robot	lab13.cpp	/^    robot(){};$/;"	f	struct:robot
+robot	lab13.cpp	/^    robot(int RobotNumber, char RobotType, char* RobotManufacturer) {$/;"	f	struct:robot
+robot	lab13.cpp	/^struct robot {$/;"	s	file:
+robot	robots.h	/^    robot(){};$/;"	f	struct:robot
+robot	robots.h	/^    robot(int RobotNumber, char RobotType, char* RobotManufacturer) {$/;"	f	struct:robot
+robot	robots.h	/^struct robot {$/;"	s
+status	lab13.cpp	/^    int status; \/\/ 0 for in holding, 1 for deployed$/;"	m	struct:robot	file:
+type	lab13.cpp	/^    char type;$/;"	m	struct:robot	file:
+type	robots.h	/^    char type;$/;"	m	struct:robot

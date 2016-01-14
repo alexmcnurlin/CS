@@ -1,0 +1,2 @@
+#! /bin/bash
+lpr -P jeb331 $1

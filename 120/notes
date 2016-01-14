@@ -1,0 +1,11 @@
+Mon, Oct 9
+  structs:
+  srruct myType {
+    char name [];
+    char rank:
+    int serno;
+  }
+  struct parts are called members
+  this declares a new type  It doesn't actually set aside any memory
+  myType soldier;
+  soldier.name = "Alex";

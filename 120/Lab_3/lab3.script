@@ -1,0 +1,32 @@
+Script started on Tue 15 Sep 2015 12:57:41 PM PDT
+[?1034hbash-4.1$ exit./lab3 
+Enter radius a for the ellipse: 9.23
+Enter radius b for the ellipse: 6
+The circumference of the ellipse is: 48.9106
+
+bash-4.1$ ./lab3 
+Enter radius a for the ellipse: -9
+Enter radius b for the ellipse: 5
+
+The inputs are invalid. Please make sure they're both positive numbers. 
+exiting...
+
+
+bash-4.1$ ./lab3 
+Enter radius a for the ellipse: 5
+Enter radius b for the ellipse: 5
+Your ellipse is a circle!
+The circumference of the circle is: 31.4159
+
+bash-4.1$ ./lab3 
+Enter radius a for the ellipse: four    6
+Enter radius b for the ellipse: four
+
+The inputs are invalid. Please make sure they're both positive numbers. 
+exiting...
+
+
+bash-4.1$ exit
+exit
+
+Script done on Tue 15 Sep 2015 12:58:29 PM PDT

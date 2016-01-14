@@ -1,0 +1,23 @@
+Script started on Mon 16 Nov 2015 05:31:58 PM PST
+[?1034hbash-4.1$ ./lab11
+16 123ABC 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 0
+123ABC (base 16) is...
+     100100011101010111100 (base 2)
+     2020200210120 (base 3)
+     10203222330 (base 4)
+     301212214 (base 5)
+     41334540 (base 6)
+     13104021 (base 7)
+     4435274 (base 8)
+     2220716 (base 9)
+     1194684 (base 10)
+     746647 (base 11)
+     497450 (base 12)
+     32AA1A (base 13)
+     231548 (base 14)
+     188EA9 (base 15)
+     123ABC (base 16)
+bash-4.1$ exit
+exit
+
+Script done on Mon 16 Nov 2015 05:32:25 PM PST

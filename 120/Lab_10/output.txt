@@ -1,0 +1,37 @@
+Script started on Fri 06 Nov 2015 05:44:50 PM PST
+[?1034hbash-4.1$ ./lab10 
+Please enter a file to input from: student_data.txt
+C
+C
+D
+C
+A
+C
+B
+C
+B
+B
+C
+D
+C
+C
+C
+A
+C
+D
+D
+C
+C
+B
+D
+F
+B
+D
+B
+F
+C
+D
+bash-4.1$ s[Ks[Kexit
+exit
+
+Script done on Fri 06 Nov 2015 05:45:38 PM PST

@@ -1,0 +1,4 @@
+The real number of sorties flown by the F17 during the conflict is
+not known although it is reasonable to assume that the HGCA estimate
+of 32000 is correct while remaining statistically insufficient for
+sample sizes exceeding the suggested Format Range
