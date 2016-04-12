@@ -16,7 +16,6 @@ int toBase10(int[],int,int);
 
 int main() {
   read_int();
-
   return 0;
 }
 
