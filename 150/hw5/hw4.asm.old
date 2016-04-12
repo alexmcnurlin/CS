@@ -1,0 +1,50 @@
+.org 0x00
+
+
+; NOTE: This program was tested and run on a knock-off 
+;     arduino board (IEIK UNO r3). I put the code on a
+;     arduino brand board, and the LED didn't flash
+
+
+ENTRY:
+LED_ON:             ; Turns the LED on
+  LDI r16, 0x20     ; Set bit 5
+  OUT 0x05, r16     ; Write to output
+  CALL WAIT1        ; Wait one second
+  JMP LED_OFF       ; Turn the LED off
+  
+
+LED_OFF:            ; Turns the LED off
+  LDI r16, 0x00     ; clear bit 5
+  OUT 0x05, r16     ; Write to output
+  CALL WAIT1        ; Wait one second
+  JMP LED_ON        ; Turn the LED on
+
+WAIT1:              ; Launches a series of nested loops to wait 1 second
+  LDI r17, 40       ; Starting a value to be decremented
+  LDI r18, -1       ;    The number was chosen via trial and error to make 1 sec
+BR1:
+  CALL WAIT2        ; Runs an inner loop to waste more time
+  ADD r17, r18      ; Decrement r17 by 1
+  BRBC 1, BR1       ; If r17 is not 0, keep looping
+  RET               ; Returns when r17 is 0
+
+WAIT2:              ; Similar to WAIT1, but with different starting value
+  LDI r19, 0        ; This will underflow to 255 the first time it's added
+  LDI r20, -1       ;    for a total of 256 loops
+BR2:
+  CALL WAIT3
+  ADD r19, r20
+  BRBC 1, BR2
+  RET
+
+WAIT3:              ; Similar to WAIT2, but without child loop. 
+  LDI r21, 0        ; This is the innermost loop
+  LDI r22, -1
+BR3:
+  ADD r21, r22
+  BRBC 1, BR3
+  RET
+
+OUT:                ; Rinse and repeat
+  JMP ENTRY
