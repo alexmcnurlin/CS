@@ -6,7 +6,7 @@
  * 2/12/16
  * 
  * Time Log
- *    * 2/10 - 18:00-
+ *    * 2/10 - 18:00-22:10
  */
 
 #include <fstream>
@@ -40,7 +40,7 @@ int main() {
   
 
   read_file_size( opened_file, x_size, y_size );                // Reads the size of array into x_size and y_size
-  int* pixel_array[x_size*y_size];                              // I ran into too many probrems using a 2d array, so it's a single dimensional array instead
+  int* pixel_array[x_size*y_size];                              // I ran into too many probrems using a 2D array, so it's a single dimensional array instead
 
   read_file( opened_file, pixel_array, x_size, y_size );        // Reads the rest of the data into the function
 
@@ -51,7 +51,6 @@ int main() {
     }
     write_file << endl;
   }
-
 
   return 0;
 }

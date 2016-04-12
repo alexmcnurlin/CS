@@ -1,0 +1,27 @@
+Script started on Wed 10 Feb 2016 10:37:03 PM PST
+[?1034hbash-4.1$ cat test.txt
+8 2
+0x0 0x0
+0x1 0x8
+0x3 0xc
+0x7 0xe
+0x7 0xE
+0x3 0xC
+0x1 0x8
+0x0 0x0
+bash-4.1$ hw1[K[K[K.'[K/hw1
+Please enter file to read from: in  test.txt
+Please enter file to write to: output_file.txt
+bash-4.1$ cat output_file.txt
+00000000
+00011000
+00111100
+01111110
+01111110
+00111100
+00011000
+00000000
+bash-4.1$ exit
+exit
+
+Script done on Wed 10 Feb 2016 10:37:36 PM PST
