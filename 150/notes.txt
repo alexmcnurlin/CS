@@ -1,0 +1,475 @@
+// vim: sw=4 ts=4 sts=4
+http://www2.cs.uidaho.edu/~mdwilder/cs150/index.html
+Prof: Michael Wilder
+
+
+Wed, Jan 13
+		Turing Machine
+				Mathematical model of a device that can perform any computation (Alan Turing, 1937)
+				Every computation can be performed by some Turing machine
+		Universal Turing Machine
+				A machine that can implement all Turing Machines
+						inputs: data, plus a description of computation (other Turing Machines)
+		In theory, a computer can compute anything possible (given enough memory and time)
+		In practice, problem solving involves computing under constraints
+				- time
+				- cost
+				- power
+
+Fri, Jan 15
+		Big Idea #2: Transformation between layers
+				Problems, Algorithms, Language, Instruction Set Architecture, Microarchitecture, circuits, devices
+		Solving problems using computers
+				Problem   -> Software design 
+				Algorithm -> Programming
+				Program   -> Compiling/Interpreting
+				Insn (Instruction) Set Architecture -> Processor Design
+				MicroArch	-> Logic/Circuit Design
+				Circuits	-> Process Engineering
+				Devices
+		Transformation between layers
+				Problem Statement
+						* stated using "Natural language"
+						* May be ambiguous, imprecise
+				Algorithm
+						* Step-by-step procedure, guaranteed to finish
+						* Definiteness, effective computability, finiteness
+				Program
+						* Express the algorithm using a computer language
+						* High-level language, low-level language
+				Instruction Set Architecture (ISA)
+						* Specifies the set of instructions the computer can perform
+						* Data types, addressing mode
+				Microarchitecture
+						* Detailed organization of a processor implementation
+						* Different implementations of a single ISA
+				Logic Circuits
+						* Combine basic operations to realize microarchitecture
+						* Many different ways to implement a single function (e.g. addition)
+				Devices
+						* Properties of materials, manufacturability
+	
+	
+Wed, Jan 20
+		Signed Integers
+				Positive
+						Just like unsigned
+						00101 = 5
+				Negative
+						Sign-magnitude - first bit shows sign, else same as positive
+						10101 = -5
+						Ones compliment - Flip every bit to show negative
+						11010 = -5
+								Problem: Has 2 representations of 0
+						Twos compliment - Similar to ones compliment. -5 + 5 = 0 using normal binary addition
+						11011 = -5
+								How to get: Take the ones compliment and add 1
+								This is used everywhere!
+
+Fri, Jan 22
+
+
+Mon, Jan 25
+		Very Large or Small: Floating Point
+				Use equivalent of scientific notation: F x 2^E
+				Need to represent F (fraction), E (exponent), and sign.
+				IEEE 754 Floating-Point Standard (32-bits):
+				1  bit: Sign
+				8  bit: Exponent
+				23 bit: Fraction
+		Other Data Types
+				Text strings
+						- Sequence of characters
+						- Typically no hardware support
+				Image
+						- Array of pixels
+						- Hardware support
+								* Typically none in general purpose processors
+								* MMX: multiple 8-bit operations on 32 bit word
+		Simple Switch Circuit
+		*   __()__
+		*  	|      |
+		*  (+)			 /
+		*  (-)			/
+		* 	|______|
+
+		Transistor:
+				n-Type transistor
+						* When gate is tied to GND the switch is open
+								- No current flows from source to drain
+						*	When gate is tied to voltage the switch is closed
+								- Current flows from source to drain
+
+Wed, Jan 27
+		Transistors (cont)
+				p-type transistor
+						* When gate is tied to GND the switch is closed
+								- Current flows
+						* When gate is tied to voltage the switch is open
+								- current doesn't flow
+				Logic gates
+						Complementary MOS
+								Uses n-type and p-type tansistors
+								- p-type
+										* Attached to + voltage
+										* Pulls output voltage UP when input is zero
+								- n-type 
+										* Attached to GND
+										* Pulls output voltage DOWN when input is one
+
+
+Mon, Feb 1
+	Building Functions from logic gates
+		Combinational logic circuits
+			output depends on only the current inputs
+		Sequential Logic Circuits
+			Output depends on the sequence of inputs
+
+Mon, Feb 8
+	Combinational circuits
+		Always produces the same output for a given set of inputs
+	Sequential circuits
+		Stores information
+		Output depends on stored information plus input 
+		Useful for building "memory" elements and "state machines"
+
+Fri, Feb 12
+	State Machine
+		- A type of sequencial circuit
+		- Combines combinational logic with storage
+		- Takes input, pipes that into a combinational logic ciruit, then stores the result
+		Every program can be reduced to a final state machine
+
+
+Mon, Feb 22
+	Stored Program Computer
+		- A memory, containing instructions and data
+		- A processing unit for performing calculations
+		- A control unit, for interpreting instructions
+	Harvard Model
+		Refinement of von Neumann Model
+			Separate memories for data and program storage
+			Program and data stored in same memory in von Neumann Model
+		Conceptually, very similar
+			Synchronous, sequential
+			Programs interpreted by control unit
+
+Fri, Feb 26
+	Von Neumann Model
+		Control unit
+			PC, IR
+		Processing unit
+			ALU, TEMP
+		Memory
+			MAR - Memory address register
+				* Contains the address of the instruction to be run
+			MDR - Memory data register
+				* Contains the instruction referenced by MAR
+	
+	Harvard Model
+		Memory - 2 discrete memories, more secure
+			PMEM - Program memory
+				MAR
+				MDR
+			DMEM - Program memory. Effectively read only
+				MAR
+				MDR
+	Memory
+		2^k x m array of stored bits
+		Address  - Unique (k-bit) identifier of location
+		Contents - m-bit value stored in location
+		Basic operations
+			- Load: Read a value from a memory location
+			- Store: Write a value to a memroy location
+	
+		Interface to memory
+			To load a location A
+				- Write the address (A) into the MAR
+				- Send a read signal to the memory
+				- Read the data from the MDR
+			To store a value X to a location A
+				- Write the data (X) to the MDR
+				- Write the address (A) into the MAR
+				- Send a write signal to the memory
+		
+	Processing Unit
+		Functional Units
+			ALU - Arithmetic and logic unit
+				Could have many functional units
+		Registers
+			Small, temporary storage
+			Operands and results of functional units
+			atmega328P has 32 registers, each 8 bits wide
+		Data word size
+			number of bits normally processed by ALU in one instruction
+			also width of registers 
+			atmega 328P is 8 bits
+	
+	Input and Output
+		Devices for getting data into and out of computer memory
+		Each device has its own interface, usually a set of registers like the memory's MAR and MDR
+		Some devices provide both input and output
+		Program that controls access to a device is usually called a driver
+
+
+Mon, Feb 29
+	Control Unit
+		Orchestrates execution of the program
+		IR - contains the current instruction
+		PC - Contains the address of the next instruction to be executed
+		- Reads an instruction from memory
+			* The instructions address is in the PC
+		- Interprets the instruction, generating signals that tell the other components what to do
+			* An instruction may take many machine cycles to complete
+	Instruction Processing
+		1. Fetch instruction from memory
+		2. Decode instruction
+		3. Evaluate address
+		4. Fetch operands from memory
+		5. Execute operation
+		6. Store result
+	
+	About Instructions
+		Instruction is the fundamental unit of work
+		Specifies 2 things
+			- opcode: operation to be performed
+			- operands: data/locations to be used for operations
+		An instruction is encoded as a sequence of bits (just like data)
+			- Often, but not always, instructions have a fixed length, such as 16 or 32 bits
+			- Control unit interprets an instruction: generates sequence of control signals to carry out operation. 
+			- Operation is either executed completely, or not at all.
+		A computer's instructions and their formats is known as its "Instruction Set Architecture"
+
+		Instruction format
+			"AVR add Instruction"
+				Instruction format: 000011rdddddrrrr
+				Syntax: Rd, Rr 0<=d<=31, 0<=r<=31
+
+Wed, Mar 2
+	Instruction Processing: 
+		FETCH
+			Load next instruction (at address stored in PC) from memory into Instruction REgister (IR)
+			- Copy contents of PC into PMAR
+			- Send "read" signal to memory
+			- Copy contents of PMDR into IR
+		Decode
+			Identify the opcode	
+				For ADD instruction, this is bits [15:10]
+			Identify other operands (depending on opcode)
+				For ADD instructions, need r and d operands
+		Evaluate Address
+			For instructions that require memory access, compute address to be used
+			Ex. Get address of jump operand
+		Fetch Operands
+			Obtain source operands needed to perform operation
+			Ex. Load data from memory (LD)
+			Ex. Read data from register file (ADD)
+		Execute
+			Perform operation using source operands
+		Store the results
+			Write results to destination (register or memory)
+				- AKA "writeback"
+			Ex.
+				Results of ADD placed in destination register
+				Result of memory load is placed in destination register
+				For store instruction, data is stored to memory
+					Write address to MAR, data to MDR
+					Assert WRITE signal to memory
+
+Fri, Mar 4
+	RTL - Register Transfer Language
+		FETCH
+			1. PMAR <- PC
+			2. Assert READ on memory
+			3. IR <- PMDR
+			3. PC <- PC + 1
+		Decode
+			Identify opcode and operands
+		EA - Evaluate Addresses
+			Compute addresses to be used
+		OP - Fetch operands
+			Retrieve operands from memory
+		EX - Execute
+		S  - Store data
+			Write results to destination
+	Changing sequence of instructions	
+		*control instructions*
+		- Jumps are unconditional -- always change the PC
+		- Branches are conditional -- they change the PC only if some condision is true
+			redirecting flow of control is called "control-flow redirection"
+
+
+Mon, Mar 7
+	Assembly language
+		Computers like ones and zeroes
+			0001110010000110
+		Humans like smbols
+			Add R0,R17 ; increment index reg.
+		
+		An assembler is a program that translates symbols for instructions into actual machine instructions
+			* ISA-specific
+			* Close relationship between symbols and insn-set
+			* Mnemonics for opcodes
+			* Labels for memory locations
+			* Additional operations (directives) for various tasks like allocating and initializing storage
+
+Wed, Mar 9
+	Assembly:
+		Syntax:
+			LABEL OPCODE OPERANDS ; COMMENTS
+		Labels:
+			Placed at beginning of line
+			Assigns a symbolic name to the address corresponding to line
+			`loop: add r1,r3`
+		Comment
+			Anything after semicolon is ignored by assembler
+
+Fri, Mar 11
+	Assembly
+		brbc 1 , loop; Branch if bit is clear, go to loop
+		eor  r0, r0	 ; Exclusive or (not if and only if). In this case, always returns false
+	Assembler directives
+		* Not operations executed by program, rather instructions for assembler
+		* Looks like instructions, but opcode starts with dot
+		* Assembler specific
+
+		Opcode		Operand			Meaning
+		-----------|---------------|---------
+		.org		address			starting addr of next insn in PMEM
+		.byte		expressions		Place bytes from expressions in code
+		.
+
+
+Mon, Mar 21
+	Assembly Process
+		* Convert assembly language file (.asm) into executable file (.hex) for the AVR
+		First Pass: 
+			- Scan program file
+			- Find all labels and calculate the corresponding addresses; this is called the symbol table
+		Second Pass:
+			- Convert instructions to machine language, using information from symbol table
+
+		First Pass
+			1. Initialize the location counter which keeps track of the address of the current instruction
+			2. For ech non-empty line in the program: 
+				If a line contains a label, add label and LC to symbol table
+				Increment LC
+			3. Stop when end of file is reached
+		Second Pass
+			1. For each executable assembly language statement, generate the corresponding machine language instruction.
+				- If operand is a label, look up the address from the symbol table.
+			2 
+
+Wed, Mar 23
+	Second Pass
+		1. For each executable assembly language statement, generate the corresponding machine language instruction.
+			- If operand is a label, look up the address from the symbol table.
+		2. Potential problems:
+			- Improper number or type of arguments
+			- Immediate argument too large	
+				* ex: ori r1, 0xdeadbeef
+
+	Loading: the process of copying an executable image into memory
+		- More sophisticated loaders are able to relocate images to fit into available memory
+		- Must readjust branch targets, load/store addresses 
+
+	Linking: The process of resolving symbols between independent object files.
+		- Suppose we define a symbol in one module, and want to use it in another
+		- Some notation, such as .extern, is used to tell the assembler that a symbol is defined in another module
+		- Linker will search symbol tables of other modules to resolve symbols and complete code generation before loading.
+	
+	Building An Assembly Language Program Using GNU Toolchain
+
+		avr-as -mmcu=atmega328p myfile.asm	
+			* produces a.out
+		avr-ld -m avr5 -o myfile.elf a.out
+			* Produces .elf file from a.out
+		avr-objcopy -O ihex -R .eeprom myfile.elf myfile.hex
+			* Produces Intel .hex (ROM image) from .elf
+		Idino -P myfile.hex
+			* Programs the atmega328p on Arduino with contents of myfile.hex
+
+Fri, Mar 25
+	.ldinorc
+		arduino-home=/home/alexmcnurlin/var/arduino-1.0.5
+		arduino-port= idk
+	ldino options
+		-L Produce listing file of your machine code
+		-P program an attached Arduino board with a .hex file
+
+
+Mon, Mar 28
+	Instruction Set Architecture
+		ISA: All of the programmer-visible components and operations of the computer. 
+			- Memory organization
+				* Address space -- how many locations can be addressed
+				* addressability -- how many bits per location?
+			- register set
+				* How many? What size? How are they used?
+			- Instruction set
+				* Opcodes
+				* Data types
+				* Addressing modes
+		ISA provides all information needed for someone who wants to write a program in machine language ( or translate from a high-level language to machine language )
+
+		Memory and Registers
+			* Program memory
+				- Address space: 32K locations (15 bit addresses )
+				- addressability 16 bits
+			* Data Memory
+				- address space: 2k locations (11-bit addresses)
+				- Addressability: 8 bits
+			* Registers
+				- Temporary storage: accessed in a sigle machine cycle
+				- 32 general-purpose registers: R0 - R31
+					* each 8 bits wide
+					* How many bits to uniquely identify a register
+				- Other registers
+					* Not directly addressable, but used by ( and affected by  ) instructions
+					* PC, IR, ect
+
+		Instruction set
+			* 30 opcodes
+				- ALU instructions: ADC, ADD, AND, NOP, CP, EOR, OR, MOV
+				- Immediate instructions: CPI, ORI, ANDI, LDI
+				- Unary logical: COM, NEG, ASR, LSR
+				- Load/Store: LDS, STS
+				- Branch: BRBS, BRC ( aka BRZS, BRZC, BRCS, BRCC )
+				- Input/Output: IN, OUT
+				- Call/Jump: CALL, JMP
+				- Returnn: RET, RETI
+				- Stack: PUSH, POP
+				- Relative jump: RCALL, RJMP
+			* Addressing Modes
+				- Specify how the location of an operand is resolved
+				- Non-memory addresses: immediate, register direct, etc.
+				- Memory addresses: data direct, data indirect, data indirect with displacement, ect
+
+		Control Instructions
+			* Used to alter the sequence of instructions (by changing the PC)
+
+Wed, Mar 30
+	Control instructions
+		* used to alter the sequence of instructions (by changing the PC)
+		* Conditional Branch
+			- Branch is taken if a specified condition is true (BRBC, BRBS)
+				* BRCC/BRCS is alias of BRBC/BRBS with field "SSS" being the SREG bit index of the condition code
+				* Signed offset is added to PC to yield new PC
+			- Else the branch is not taken
+				PC is not changed, points to the next sequential instruction
+		* Unconditional branch
+			- JMP, RJMP, CALL, RCALL 
+				* Relative forms add signed offset to PC to yield new PC
+			- Always change the PC (no condition)
+
+
+Mon, Apr 25
+	Interrupst
+		ISR: Interrupt service register
+		IRQ: INterrupt request
+		Configurable interrupt registers:
+			EICRA - External Interrupt Control Register A
+				* Contains control bits for interrupt sense control
+				* Configure external interrupts ( I think )
+			EIMSK - External interrupt Mask Register
+				* Configure internal interrupts ( I think )

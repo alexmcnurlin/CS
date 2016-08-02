@@ -1,0 +1,127 @@
+Script started on Sat 30 Apr 2016 02:54:26 PM PDT
+alexmcnurlin@Laquisha: ~/Google Drive/schoolStuff/cs121/hw5alexmcnurlin@Laquisha:~/Google Drive/schoolStuff/cs121/hw5$ ./hw5
+
+Enter filename: dict4.txt
+
+Hash table Bucket Size:
+--------------------
+
+0: 595 items
+1: 568 items
+2: 585 items
+3: 513 items
+4: 594 items
+5: 591 items
+6: 616 items
+7: 553 items
+8: 540 items
+9: 592 items
+10: 565 items
+11: 544 items
+12: 606 items
+13: 560 items
+14: 625 items
+15: 546 items
+16: 569 items
+17: 587 items
+18: 574 items
+19: 610 items
+20: 598 items
+21: 570 items
+22: 608 items
+23: 559 items
+24: 573 items
+25: 606 items
+26: 587 items
+27: 576 items
+28: 599 items
+29: 543 items
+30: 608 items
+31: 611 items
+32: 603 items
+33: 603 items
+34: 545 items
+35: 577 items
+36: 564 items
+37: 581 items
+38: 574 items
+39: 611 items
+40: 593 items
+41: 607 items
+42: 615 items
+43: 618 items
+44: 597 items
+45: 638 items
+46: 585 items
+47: 588 items
+48: 578 items
+49: 615 items
+50: 616 items
+51: 565 items
+52: 585 items
+53: 579 items
+54: 564 items
+55: 531 items
+56: 555 items
+57: 582 items
+58: 592 items
+59: 573 items
+60: 571 items
+61: 603 items
+62: 614 items
+63: 564 items
+64: 603 items
+65: 550 items
+66: 598 items
+67: 614 items
+68: 600 items
+69: 549 items
+70: 631 items
+71: 684 items
+72: 585 items
+73: 574 items
+74: 578 items
+75: 602 items
+76: 569 items
+77: 614 items
+78: 526 items
+79: 632 items
+80: 565 items
+81: 595 items
+82: 562 items
+83: 580 items
+84: 613 items
+85: 626 items
+86: 581 items
+87: 609 items
+88: 567 items
+89: 629 items
+90: 591 items
+91: 579 items
+92: 578 items
+93: 630 items
+94: 600 items
+95: 608 items
+96: 586 items
+97: 589 items
+98: 572 items
+99: 609 items
+0 buckets had no contents
+
+Max: Bucket 71 has 684 nodes
+Min: Bucket 3 has 513 nodes
+
+Found "unity" in bucket 89. 54 probes requred
+Found "za" in bucket 79. 1 probes requred
+Found "abler" in bucket 88. 567 probes requred
+Found "wager" in bucket 54. 14 probes requred
+Found "wormy" in bucket 54. 5 probes requred
+Found "memorable" in bucket 78. 266 probes requred
+Found "mango" in bucket 30. 322 probes requred
+Found "physics" in bucket 63. 208 probes requred
+Found "nameless" in bucket 16. 286 probes requred
+Found "cubit" in bucket 75. 476 probes requred
+
+alexmcnurlin@Laquisha: ~/Google Drive/schoolStuff/cs121/hw5alexmcnurlin@Laquisha:~/Google Drive/schoolStuff/cs121/hw5$ exit
+
+Script done on Sat 30 Apr 2016 02:55:01 PM PDT

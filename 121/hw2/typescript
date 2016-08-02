@@ -1,0 +1,25 @@
+Script started on Thu 25 Feb 2016 09:02:06 PM PST
+alexmcnurlin@Laquisha:$ ./hw2
+RPN Calculator v1.0 by Alex McNurlin
+RPN (empty) > 3 6 +
+RPN 9 >  5 8 -
+RPN -3 > 2 *
+RPN -6 > -1 /
+RPN 6 > sq
+RPN 36 > sqrt
+RPN 6 > ps
+Stack contents: 6 9 
+RPN 6 > swap ps
+Stack contents: 9 6 
+RPN 9 > dup ps
+Stack contents: 9 9 6 
+RPN 9 > 10 - sqrt
+Cannot get square root of negative number!
+RPN -1 > 0 /
+Cannot divide by zero!
+RPN -1 > 5.2 3.1 - sq 7.9 2.4 - sq + sqrt
+RPN 5.88727 > 4.2 sq 5.33 sq + sqrt
+RPN 6.78593 > quit
+alexmcnurlin@Laquisha:$ quit
+
+Script done on Thu 25 Feb 2016 09:05:20 PM PST

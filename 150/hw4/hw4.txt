@@ -1,0 +1,25 @@
+1) 
+  PMAR <= PC
+  assert READ of PMEM
+  PMDR <= PMEM[PMAR]
+  IR <= PMDR
+  PC <= PC +1
+
+  IF IR[15:10] = 000011
+  ALU1 <= R[ {IR[9], IR[3:0]} ]
+  ALU2 <= R[IR[8:4]] 
+  assert ADD of ALU
+  R[IR[8:4]] <= ALURESULT
+
+2) 
+  PMAR <= PC
+  assert READ of PMEM
+  PMDR <= PMEM[PMAR]
+  IR <= PMDR
+  PC <= PC +1
+
+  IF IR[15:10] <= 100101
+  ALU1 <= R{IR[8:4]}
+  ALU2 <= 0xFF
+  assert SUBTRACT of ALU
+  R[IR[8:4]] <= ALURESULT

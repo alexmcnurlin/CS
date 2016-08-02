@@ -1,0 +1,103 @@
+Script started on Tue 08 Mar 2016 12:01:48 PM PST
+
+root@Laquisha:/home/alexmcnurlin/Google Drive/schoolStuff/cs121/hw3# ./hw3
+Enter file to read: maze10.in
+S##v#vv##v
+vvvvvvvvvv
+#vv#v#v#vv
+.#v#vvv###
+#vvvv#vvvv
+.#v###v##v
+.##vvvv##v
+.#.#v##vvv
+..vvv#..#v
+##.v##.##G
+The end is located at (9, 9)
+
+root@Laquisha:/home/alexmcnurlin/Google Drive/schoolStuff/cs121/hw3# ./hw3
+Enter file to read: maze20.in
+Svvv#vvvv#####..#..#
+v##vvv#vvvv#......#.
+vvv##vvv#v#..#.###..
+##v#vvv##vv#.#.####.
+#vv##v#vvv#.....#...
+vv####vvvvv#.##....#
+vv###.##vv#.##..#...
+#vvvv#vv#v###.#.....
+#vvv###vvvv###.###..
+vv#vvv#v#vvvv##...#.
+v##vv#vv#v##vv###.#.
+v#vvv#v#.#..#v...#.#
+vv##v#vv#####.##..#.
+v#vvvvvvv####..###..
+vvvv####v#....#...#.
+##v#v#.vvv##...###..
+.#vvvvv#v#.#.......#
+v#v##v.#.....#.###.#
+vvvv#..##.###...##.#
+Gvvv#.....#####....#
+The end is located at (19, 0)
+
+root@Laquisha:/home/alexmcnurlin/Google Drive/schoolStuff/cs121/hw3# ./hw3
+Enter file to read: maze40.in
+###vvvSvv##.....##....######........#...
+#vvv####vvv###.##.##.#..##...######...#.
+.#vvvv#vvvvvv##.......##....##....#.###.
+#.#vvvvvv##vvvv###..#...#.##..##.#######
+##vvvvv##vv#vv#...####.###.###....####..
+vv#vv#v##v#.#vv##.#...#...#..##.#.####.#
+v#vvv#vvvvv#.##.######...###.....#.....#
+vvvv#v##v#vv#v##..#.####..##..##....####
+v###vv#vvvv#vvv#.#.#.#..#.####.......###
+vv###v#v##vv#vvv#.##.########....##.###.
+#vvvvvv###v#vv##..##....##.#####..###.#.
+.###v##vv#v#v##.#..#........#....###.#..
+.###v##vvvvvvv#..#.###..######.###....#.
+..##v#.#vvv##vv####v####..#########.#..#
+##vvv###vvvvvvv###vv###.##.######..#.##.
+..##vvv###v##vvv#vv##..#...########..##.
+.###v##vv#vv##vv#v#..#..#...##.#..#.....
+..##v#vv#.##.##vvvv##.##.#####.###.##..#
+####vvvv##..###v#vvvv####..##......####.
+vv#vvvv#vv#.#vvv##v##v##v##....###...#..
+vvvv##vvvvv#.###.#vv#v#vv##.###...###.#.
+v###vvv##v#..##..##vvvvvvvv#v#.#..#..##.
+#.#.#vvv#v#####.#..#vv#vv#vvv#..#..#.#.#
+.###.##vvvvvvv#...#vv#vv####vv####.####.
+..###vvvv#vv##.#...###vv####vvv#vv###..#
+.##..###vv#####.#.#...#vv##vvvvvvvv#..#.
+.#.##vvvv#..##...#.###.#vvvvv#vvv#vv###.
+..#.###vvv#...#......###v##v#v#vvv#v#...
+.###.##v#vv#.##.##.##..###vvvv#vv#vvv###
+###.##.#.#vv#..#..###.#..#vvv####.##vvvv
+.####.#.##vvv##.##vvv#.#..##v##..###v##v
+#.#..#..#.##vvv##vv##.#...###.###.#.##vv
+...#..####..##vvvvvvv#.#...###.#....#vvv
+.##....##.##vv#v###v###.###...####.#.vv#
+...##...##vvv#vvv#vvvvv#vv##v.##...#..##
+##......#.##vvv###vv#vvvv#vvv######.#...
+.....##..#..#vv##vv#.##vvvv#v..#.....##.
+.##..##.#....#########.#v###########....
+.#.#.#....##...##.....##vvvv####.....##.
+....###.###........######vvvG....#######
+The end is located at (39, 28)
+
+root@Laquisha:/home/alexmcnurlin/Google Drive/schoolStuff/cs121/hw3# ./hw3
+Enter file to read: invalid_maze.in
+S##v#vv##v
+vvvvvvvvvv
+#vv#v#v#vv
+.#v#vvv###
+#vvvv#vvvv
+v#v###v##v
+v##vvvv##v
+v#v#v##vvv
+vvvvv#vv##
+##vv##v##G
+Maze cannot be solved!
+
+
+root@Laquisha:/home/alexmcnurlin/Google Drive/schoolStuff/cs121/hw3# exit
+exit
+
+Script done on Tue 08 Mar 2016 12:02:22 PM PST

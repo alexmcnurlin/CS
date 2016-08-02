@@ -1,0 +1,831 @@
+// vim: sw=4 ts=4 sts=4
+Prof:   Bruce Bolden
+Email:  bruceb@cs.uidaho.edu // Put [CS 121] in subject line
+Office: JEB 232
+
+Fri, Jan 15
+    Dynamic memory
+        Manipulating memory dynamically requires considerable attention by the programmer
+    Pointers
+        A reference to a memory cell. 
+        &  Address of operator
+        *  Dereferencing (contents of) operator
+    Motivation for using pointers
+        Arrays
+            * Fixed size (N at compile time)
+            * Homogeneous (Same data type)
+            * Access items using an index ( 0 ... 1 )
+            * Contiguous (All together)
+        Linked LIsts
+            * Dynamic (Change at runtime)
+            * Homogoneous (typically)
+            * Access items using pointers
+            * Not necessarily stored in contiguous memory locations
+            
+    Memory Allocation
+        Static
+            - Occurs at compile time
+        Dynamic 
+            - Occurs at runtime
+
+
+Wed, Jan 20
+    Dynamic Memory Allocation
+        * C++ has the 'new' operator
+        int *P = new int;       // Declares new pointer
+        delete P                // Deletes the pointer and gives the memory back to the OS
+    Static arrays (C++)
+        const int A_SIZE = 50;
+        int A[A_SIZE]
+    Dynamic arrays (C++)
+        int A_SIZE = 50
+        int *pIArr = new int[A_SIZE]
+        delete [] pIArr;        // Brackets required to delete array
+    Operations in C vs C++
+        Operation       C++                     C
+        -------------------------------------------------------------
+        Allocation      new                     Malloc, alloc, calloc
+        deallocation    delete                  free
+    Arrays
+        Operation       C++                     C
+        -------------------------------------------------------------
+        declare         int *pA;                int *pA;
+        allocate        pA = new int[N];        pA = (int *)malloc(N*sizeof(int));
+        release         delete [] pA;           free( (void *)pA );
+    
+    Multidimensional arrays
+        int **array2d;
+        arr2D = new int* [nRows];
+        for( int i = 0 ; i < nRows ; i++ ) {
+            arr2D[i] = new int[nCols];
+            if( arr2D[i] == NULL ) {
+                ERROR MESSAGE;
+            }
+        }
+
+        for( int i = 0 ; i < nRows ; i++ ) {
+            delete arr2D[i];
+        }
+        
+        delete [] arr2D;
+
+Fri, Jan 22
+    Structs
+        typdef defines new type
+        typdef struct fraction Fraction; // Note: Capital letters used to denote data types
+
+
+Mon, Jan 25
+    Linked Lists
+        A linear collection of self referential objects. They aren't always class objects, but they can be.
+
+        ```
+            struct Node {
+                int info;
+                struct Node* next; 
+            };
+            typdef struct Node *NodePtr; // Creates a new type. 
+        ```
+
+        Node implementation:
+            Node as head.
+            Head pointer as the head.
+        Common list operations
+            Print
+            Size/Length
+            Insertion
+            Deletion
+
+        ```
+            void PrintList() {
+                NodePtr p = head;
+                while( p != NULL ) {
+                    cout << p->info << endl;
+                    p = p->next;
+                }
+            }
+        ```
+
+    Other Data Structures
+        Stacks
+        Queues
+        Trees (Non-linear data structure)
+
+Wed, Jan 27
+    Insertion into a linked list
+        Adding to front             // Probably the easiest
+        ```
+        Void Add ToFront( int x ) {
+            NodePtr n = new Node; // Allocate
+            n->info = x;
+            n->next = NULL;
+
+            if( head = NULL ) {
+                head = n;
+            } else {
+                n->next = head;
+                head = n;
+            }
+        }
+        ```
+        Organized (sorted/middle)
+        Back
+            ```
+            void AddToend( int x ) {
+                NodePtr n = new Node;
+
+                n->info = x;
+                n->next = NULL;
+
+                if( head == NULL ) {
+                    head = n;
+                } else {
+                    NodePtr p = head;
+                    while( p->next != NULL ){
+                        p = p->next;
+                    }
+                    
+                    p->next = n;
+                }
+            }
+            ```
+    General operation
+        Allocate new node
+        Initialize new node
+        Add new node
+    Deletion
+        Front
+        Back
+        Middle
+
+Fri, Jan 29
+    Linked List Deletion
+        * Front
+            '''
+            void RemoveFromFront() {
+                NodePtr p=head;
+                
+                if ( p==NULL ) {
+                // do nothing
+                } else {
+                    head = p->next;
+                    p->next = NULL;
+                    delete p;
+                }
+            }
+            '''
+        * Back
+            ''' // This uses 2 pointers, one to operate on the node in question,
+                // and the second to be one node behind
+            void RemoveFromEnd() {
+                if ( head != NULL ) {
+                    NodePtr curr = head;
+                    NodePtr prev = head;
+
+                    while ( curr->next != NULL ) {
+                        prev = curr;
+                        curr = curr->next;
+                    }
+
+                    if ( prev == NULL ) {
+                        head = NULL
+                    } else {
+                        prev->next = NULL;
+                    }
+
+                    delete curr;
+                }
+
+            }
+            '''
+        * Match
+        General Operation
+            * Find node
+            * Update (break) Links
+            * Release memory of deleted node
+
+
+Mon, Feb 1
+    Objects
+        What is an object?
+            Representation in software of some real entity
+        How can an object be implemented?
+            Language dependent: structs (records), classes
+        What is the difference?
+            Structs are traditionally data onlyy and access is public.
+            Classes include methods to manipulate underlying data
+    How are classes defined?
+        Classes (or psuedo-classes) are often defined in two files
+            1. Interface
+                Defines content and manipulation
+            2. Implementation
+                Implementation defines the code to manipulate the object
+    Geometric objects
+        Circle
+            ```
+            struct circle {
+                double radius;
+            }
+            typedef struct circle Circle;
+            ```
+        Square
+        Rectangle
+            C++ uses classes, as do many object oriented languages. Can simulate object oriented programming in other languages
+
+Wed, Feb 3
+    extern: Allows you to use variables defined in other files
+    #
+
+
+Mon, Feb 8
+    Stacks
+        LIFO structure (Last in, First out)
+        A stack is a pile of things
+        Standard operations
+            A new item can be added to the top of a stack s using method s.push( x );
+            Item at the top of a stack s can be removed using s.pop()
+            The Item at the top of a stack s can be viewed using the method s.peek()
+            .empty   - Test whether container is empty
+            .size    - Return size
+            .top     - Access next element
+            .push    - Insert element
+            .emplace - Construct and insert first element
+            .pop     - Remove top element
+            .swap    - Swap components
+        "The best line of code is one you don't have to write" - Mark Fenoglio
+
+
+Wed, Feb 17
+    Queues
+        - a list in which all additions are made from one end and deletions are from the other
+        - Fifo - First in, first out
+        
+        - Operations
+            Enqueue - Add item to queue
+            Dequeue - remove item from queue
+
+
+Mon, Feb 22
+    Analysis of algorithms
+        How fast?
+        What to measure
+            - Number of 
+                * Instructions (add, multiply)
+                * Loops
+                * Comparisons
+            - Input size
+        Characterize algorithm efficiency in terms of size of input
+        Implementation independent
+        Ignore implementation dependent constants
+        Ignore finite number of special cases
+
+Wed, Feb 24
+    Big Oh notation
+        Multiplicative constants don't matter
+        Only diminiant terms matter. O(f(n) + g(n)) = O(max(f(n),g(n)))
+        Additive constants don't matter
+
+Fri, Feb 26
+    Exam!
+    #
+
+
+Mon, Feb 29
+    Recursion
+        Function that uses itself
+    
+    print out a tree
+    ```
+    void PrintTree( TreeNode *t ) {
+        if ( t != NULL ) {
+        PrintTree( t->left );
+        cout << t->data << endl;
+        PrintTree( t->right );
+        }
+    }
+    ```
+
+    Fibonacci sequence 
+    ```
+    int Fib( int n ) {
+        if ( n == 0 || n == 1 ) {
+            return n;
+        } else {
+            return Fib(n-1) + Fib(n-2);
+        }
+    }
+    Fib(n-1) + Fib(n-2)  // if n>1
+    ```
+
+Wed, Mar 2
+    Types of recursion
+        Tail
+            All the work is done before the recursive call. The value returned by the call is passed to the level above with no further changes
+        Structural
+            The structure of a functions recursive calls mirrors the structure of its input
+        Mutual
+            Recursive functions that recurse on each other
+            ```
+            bool Even( int n  ) {
+                if( n == 0 )
+                    return true;
+                else
+                    return Odd(n-1);
+            }
+            bool Odd( int n ) {
+                if( n == 0 ) 
+                    return false;
+                else 
+                    return Even( n-1 )
+
+            }
+            ```
+
+
+Mon, Mar 7
+    Inheritance
+        Extends the functions of a class to a new class
+        ```
+            class Array {
+                protected:
+                    int size;
+                    int nElements;
+                    
+                    int *A;
+
+                public:
+                    Array( int nE );
+                    ~Array();
+                    
+                    int Size() const;
+
+                    void Init( int val  );
+                    void Print() const;
+            };
+
+            class Extended Array : public Array {
+                public: ExtendedArray( int nE );
+                ~ExtendedArray();
+
+                int Get( int i );
+                void Set( int i, int val );
+            }
+
+            // In the implementation file
+            ExtendedArray::ExtendedArray( int nE ) : Array(nE) {
+                // some code here
+            }
+        ```
+
+
+Mon, Mar 21
+    Tree
+        Root: Node at the top of a tree
+        Leaf: A node with no children
+        Parent: The parent of a node is the node linked above it
+        Ancestor: A node's parent is its first ancestor
+        Subtree: Any node in a tree that can be viewed as the root of a new, smaller tree
+        Left and right subtrees: The nodes beginning with a left or right child
+        Height: The maximum depth of any leaf
+
+    Binary Tree
+        There is one special node - the root
+        Each node may be associated with up to two other diffferent nodes, called its left child and its right child.
+        If you start at a node and move to the node's parent (if there is one) then move again to that node's parent, and keep moving upward to each node's parent, you will eventually reach the root.
+
+Wed, Mar 23
+    Binary Tree Definition
+        A binary tree is either:
+            1. An empty tree
+            2. Or it has a root and the remaining nodes are divided into two disjoint sets named the left subtree and the right subtree
+
+            ```
+            struct BinaryTreeNode {
+                int data;
+                BinaryTreeNode *left;
+                BinaryTreeNode *right;
+            }
+
+            typedef struct BinaryTreeNode *BinaryTreeNodePtr;
+            ```
+    Tree operations
+        1. Print
+        2. Create
+        3. Delete
+        4. Test if node is a leaf
+            ```
+            bool IsLeaf( BinaryTreeNode *t ) {
+                return ((t->left == NULL) && (t->right == NULL))
+            }
+            ```
+        5. Search tree
+        6. Copy tree
+        7. Tree size
+            ```
+            int TreeSize( BinaryTreeNode *t ) {
+            if ( t==NULL )
+                return 0;
+            else
+                return 1 + TreeSize( t->left ) + TreeSize( t->right );
+            }
+            ```
+
+    3 common ways to traverse a tree
+        Pre-order
+            1. Process the root
+            2. Process the nodes in the left subtree (recursion)
+            3. Process the nodes in the right subtree (recursion)
+            ```
+            void PrintPreOrder( BinaryTreeNodePtr t ) {
+                if( t != NULL ) {
+                    cout << t->data << endl
+                    PrintPreOrder( t->left )
+                    PrintPreOrder( t->right )
+                }
+            }
+            ```
+        In-order
+            1. Process the nodes in the left subtree (recursion)
+            2. Process the root
+            3. Process the nodes in the right subtree (recursion)
+            ```
+            void PrintInOrder( BinaryTreeNodePtr t ) {
+                if( t != NULL ) {
+                    PrintInOrder( t->left )
+                    cout << t->data << endl
+                    PrintInOrder( t->right )
+                }
+            }
+            ```
+        Post-order
+            1. Process the nodes in the left subtree (recursion)
+            3. Process the nodes in the right subtree (recursion)
+            2. Process the root
+            ```
+            void PrintPostOrder( BinaryTreeNodePtr t ) {
+                if( t != NULL ) {
+                    PrintPostOrder( t->left )
+                    PrintPostOrder( t->right )
+                    cout << t->data << endl
+                }
+            }
+            ```
+
+Fri, Mar 25
+    Binary Searh Trees are a special kind of binary tree
+        * They're special because they're organized
+            - Every node left of node n is less than or equal to the entry in node n
+            - Every node right of node n is greater than or equal to the entry in node n
+
+
+Mon, Mar 28
+    Trees
+    ```
+    typedef struct BSTreeNode {
+        int data;
+        BSTreeNode *left;
+        BSTreeNode *right;
+    } *BSTreeNode;
+    ```
+    ```
+    void Add_BST_Recursive( BSTreePtr & t, int val ) {
+        if ( t == NULL ) { // base case
+            BSTreePtr newPtr = new BSTreeNode
+
+            newPtr->data = val;
+            newPtr->left = NULL;
+            newPtr->right = NULL;
+
+            t = newPtr;
+        } else if ( val <= t->data ) {  // Left branch
+            Add_BST_Recursive( t->left, val ); 
+        } else {                        // Right branch
+            Add_BST_Recursive( t->right, val );
+        }
+    }
+    ```
+
+Wed, Mar 30
+    Deleting a node in a binary search tree
+        3 cases:
+        1. N is a leaf
+        2. N has only one child
+        3. N has two children
+
+    ``` Psudo code
+    DeleteItem( TreePtr, key )
+        if( key is in node N )
+            DeleteNodeItem( N )
+        else
+            do nothing
+
+    DeleteNodeItem( TreePtr N )
+        if( N is a leaf )
+            remove N from the tree
+        else if( N has only one child (C) )
+            if( N is the left child of its parent P )
+                make C the left child of P
+            else
+                make C the right child of P
+        else
+            find M, the node that is N's inorder successor
+            copy info from M into N
+            remove M from the tree.
+        ```
+
+        ``` Real Code
+        void DeleteNode( TreePtr & t, DATA_TYPE val ) {
+            if( t == NULL ) { return;
+            } else if( val == t->data ) {
+                DeleteNodeItem( t );
+            } else if ( val < t->data ) {
+                DeleteNode( t->left, val );
+            } else {
+                DeleteNode( t->right, val )
+            }
+        }
+
+        void DeleteNodeItem( TreePtr& t ) {
+            TreePtr delPtr;
+
+            if( IsLeaf(t) ) {
+                delete t;
+                t = NULL;
+            } else if ( t->left == NULL ) {
+                delPtr = t;
+                t = t->right;
+                delPtr->right = NULL;
+                delete delPtr;
+            } else if ( t->right == NULL ) {
+                delPtr = t;
+                t = t->left;
+                delPtr->left = NULL;
+                delete delPtr;
+            } else {
+                DATA_TYPE replacementItem
+                ProcessLeftMost( t->right, replacementItem );
+                t->data = replacementItem;
+            }
+        }
+
+        void ProcessLeftMost( TreePtr& t, DATA_TYPE& theItem ) {
+            if ( t->left != NULL ) {
+                ProcessLeftMost( t->left, theItem );
+            } else {
+                theItem = t->data;
+
+                TreePtr delPtr = t;
+                t = t->right;
+                delPtr->right = NULL;
+                delete delPtr;
+            }
+        }
+        ```
+
+Fri, Apr 1
+    ```
+    Void DeleteList( NodePtr& h ) {
+        NodePtr p=h;
+        NodePtr d;
+
+        while ( p != NULL ) {
+            d = p;
+            p = p0>next;
+            d->next = NULL;
+            delte d;
+        }
+        h = NULL;
+    }
+    ```
+
+
+Mon, Apr 4
+    2-3 trees
+        A tree in which all leaves have either 2 or 3 children are at the same level
+        not a binary tree
+        2 leaves: the search key is greater than the left leaves, and smaller than the right leaves
+        3 leaves: r contains two data items, and its leaves have 2-3 nodes. The smaller key in r must be greater than each search key in the left subtree and smaller than each search key in the middle subtree. The larger key in r is smaller than the right subtree and bigger than the middle subtree
+    2-3-4 trees
+        2, 3, 4 children per node
+    Red-Black tree
+        A 2-3-4 tree can be represented by a special binary search tree (red black tree)
+    Optimal search tree
+        Frequency of access is equal for all nodes.
+        The tree remains the same (no insertions or deletions)
+    AVL trees
+        Adel'son-Vel'skii and Landis
+        A balanced binary tree
+        The heights of the left and right subtree differ by no more than one.
+    B-Trees
+        Many databases are implemented using B-Trees
+        A tree can be subdivided into subrees and the subtrees represented as units which are all accessed all together, call pages.
+        Rules:
+            Every page contains at most 2n items
+            Every page, except the root, contains at least n items
+            Every page is eigher a leaf page or it has m+1 descendants where M is its number of keys on the page
+            All leaf pages appear at the same level
+    B* and B+ trees
+
+Wed, Apr 6
+    Heaps
+        A certain kind of complete binary tree
+        each node in a heap contains a key, and these keys are organized in a particular manner. It's not a binary search tree, but the keys have some order
+        The smallest node is always at the top.
+        A heap can easily implement a priority queue (where we need quick access to the highest (or lowest) priority item)
+
+    Heap storage rules
+        The entry contained by a node is greater then or equal to the entries of the node's childrenn
+        The tree is a complete tree, so every level except the deepest must contain as many nodes a possible.
+        At the deepest level, all nodes are as far left as possible.
+        A min heap is defined similarly, but with smallest at the root.
+        
+    Heap Implementation
+        A head is a complete binary tree, which is more easily implemented using an array than with pointers.
+        Array:
+            left  child index: 2i + 1
+            right child index: 2i + 2
+            Parent of a node : (i-1)/2
+
+        Inserting node
+            1. Add node to right of last level
+            2. swap with parent if it's not in order
+            3. repeat
+            4. ???
+            5. Profit
+        
+        Deleting node
+            Move last node to root
+            Swap root with its larger child. Repeat until it's sorted
+
+Fri, Apr 8
+    Searching for an element in a tree can be fast, but slows down with the number of items (at best log(n))
+    What about an array?
+        Not working with just numbers
+        Need/Want some sort of conversion scheme to use an array
+    Hashing
+        Transforms keys into an array index
+        One possible implementation is to some the ASCII values of each character in a string and mod it with the table size. 
+        Collisions: Two or more keys hash to the same value/location
+            How to handle this?
+                Linear resolution
+                    If the hash for some key is already taken, find the next value to use.
+                    Clustering happens when similar hashes end up next to each other
+                Open hashing
+                    The collision is ignored and the values are put in a list in that array index.
+
+
+Wed, Apr 13
+    Searching
+        Common search techniques
+            - Linear search
+                ```
+                int LinearSearch( const int A[], const int nMax, const int val ) {
+                    for( int i = 0; i < nMax ; i++ ) {
+                        if( A[i] == val )
+                            return i;
+                    }
+
+                    return -1;;
+                }
+                ```
+            - binary search
+                ```
+                int BinarySearch( int A[], in nA, int val ) {
+                    int mid, low = 0, high = nA-1;
+
+                    while( low <= high ) {
+                        mid = (low+high)/2;
+                        if( val > A[mid] )
+                            low = mid+1;
+                        else if ( val < A[mid] ) 
+                            high = mid - 1;
+                        else 
+                            return mid;
+                    }
+
+                    return -1;
+                }
+
+                int BinarySearchR( int A[], int lo, int hi, int val ) {
+                    if( hi > lo ) {
+                        int m = (lo+hi)/2;
+
+                        if( A[m] == val )
+                            return m;
+                        else if( A[m] > val )
+                            return BinarySearchR(A, lo, m-1, val);
+                        else
+                            return BinarySearchR(A, m+1, hi, val);
+
+                    }
+
+                    return -1;
+                }
+                ```
+            - hash tables/dictionaries
+
+    Sorts
+        Common sorting techniques
+            - Bubble sort
+                Iterate through the array examining adjacent pairs of elements. If necessary, swap them to pu them in the desired order
+            - Insertion Sort
+                Iterate through the array placing the ith element with respect to the i-1 previous elements
+            - Selection Sort
+                Iterate through the array putting the ith smallest element in the ith locatiou
+                - Loop over each element
+                - Put the smallest first ( ith location ) each iteration
+                ```
+                void SelectionSort( aType A[], int nA ) {
+                    int iSmallest;
+
+                    for( int i = 0; i < nA ; i++ ) {
+                        iSmallest = IndexOfSmallest( A, i, nA-1 );
+                        Swap( A[i], A[iSmallest] );
+                    }
+                }
+                ```
+            - Quick Sort
+            - Merge sort
+        Sorting Properties
+            Comparisons
+            Swaps
+            Runtime
+
+Fri, Apr 15
+    Mergesort
+        Split into pieces, then merges the pieces together in order
+        Split, then merge
+        ```
+        void Mergesort( aType a[], int first, int last ) {
+            int middle; 
+
+            cout << "\nMergecort: " << endl;
+            cout << "Mergesort::first: " << first << endl;
+            cout << "Mergesort::last: " << last << endl;
+
+            if( first < last ) {
+                middle = first+last)/2;
+                cout << "Mergesort::middle: " << middle << endl;
+                Mergesort( a, first, middle );
+                Mergesort( a, middle+1, last  );
+                Merge( a, first, middle, middle+1, last )
+            }
+        }
+        ```
+
+
+Mon, Apr 18
+    Quicksort
+        ```
+        void Quicksort( aType a[], int first, int last ) {
+            int pivot; // index of pivot value
+
+            cout << "\nQuicksort:" << endl;
+            cout << "Quicksort::first: " << first << endl;
+            cout << "Quicksort::last:  " << last << endl;
+            
+            if( first < last ) {
+                pivot = Pivot( a, first, last );
+                cout << "Quicksort::pivot:  " << pivot << endl;
+                // a couple more lines here :/
+            }
+        }
+
+        ```
+
+
+Mon, Apr 25
+    Graphs
+        Consists of a set V of vertices and pairs from V of edges or arcs
+        2 kinds
+            - Undirected: Undirectional
+            - Directed : Directional
+        Terminology
+            - Adjacent    : Verticies are adjacent if they're in a pair
+            - Path        : Sequence of edges that begin at one vertex and end at another
+            - Simple Path : May not pass through the same vertex twice
+            - Rooted Graph: Has a node, the root, such that there is a path from the root to all nodes within the graph
+            - Free Tree   : Connected, undirected graph with no cycles. Trees cannot have cycles
+        State Space Representations of Problems
+            Nodes represent stated, and edges represent steps in a problem solving process. One or more initial states form the graph. 
+        Storing a graph:
+            Adjacency Matrix: a square grid of true/false values that represent the edges of a graph. If the graph contains N verticies, then the grid contains n rows and n columns. For the two vertex numbers i and j, the component at row i and column j is true if there is an edge from vertex i to vertex j, otherwise it's false
+            Edge Lists: A directed graph with n vertices can be represented by n different linked lists. List number i provides the connection for vertex i.
+            The lists could be linked together
+
+Wed, Apr 27
+    Graph traversals
+        Breadth-first search: Uses a queue to keep track of vertices that still need to be visited
+            The maze assignment
+            Start with a vertex
+            Mark it as processed
+            place in the queue
+            Remove a vertex from the queue
+            process all of it's unmarked neighbors and place them in the queue
+        Depth-First search: Uses a stack to keep track of vertices. Can also be done recursively so that it doesn't explicitly use a stack
+        It's necessary to mark each vertex, otherwise you could end up in a recursive loop
+        To design and implement search algorithims, a programmer must be able to analyze and predict their behavior
+            * Is the algorithm guaranteed to find a solution?
+            * will the algorithm terminate, or will it get caught in an infinite loop?
+            * Is the optimal solution guarunteed to be found?
+            * What is the complexity of the search process in terms of time usage?

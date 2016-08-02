@@ -1,0 +1,7 @@
+1. Create Queue
+2. Check directions you can go (points you can't visit are either walls or already visited)
+3. See if any of them are the solution
+4. Mark directions as visited
+5. Queue all directions
+6. Dequeue next point
+7. Goto 2
