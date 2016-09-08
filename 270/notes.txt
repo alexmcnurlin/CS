@@ -1,0 +1,37 @@
+Professor: Bob Rinker
+Office Hours: TBD
+Website: www2.cs.uidaho.edu/~rinker/cs270
+Final: Dec 15, Thu 15:00-17:00
+
+Mon, Aug 22
+  Bell Labs et al contributing to MULTICS (Multiplexed Information and Computing Service)
+  MULTICS -> UNICS -> UNIX
+  C was invented to write code for UNIX
+  People involved
+    - Kernigan
+    - Ritchie
+    - Thompson
+  Bell distributed the OS to Universities for low cost.
+  Bell Labs started charging liscencing fees. 
+  Universities and others made clones (UNIX like) to have similar functionality for free
+    - BSD
+    - MINIX
+  Evenutally, Linus Torvalds made a clone of MINIX to do what he wanted (LINUX)
+
+Wed, Aug 24
+  Process: Program in execution
+
+Wed, Aug 31
+  Function Declaration: Code that states a function or variable exists (Like a prototype!)
+  Function Definition: The actual definition of the code (The function body)
+  Function Initialization: Assigning a value to a variable
+  Defined once, declared multiple times
+  extern: States that a variable is declared in an included file (eg `extern int x`)
+
+Fri, Sep 2
+  Elf files
+    readelf: reads the elf file
+      -a: Shows all data
+    Section headers:
+      .data: Global initialized data
+      .bss: Global uninitialized data
