@@ -1,0 +1,98 @@
+Professor: Michael Wilder
+website: `http://www2.cs.uidaho.edu/~mdwilder/cs210/`
+Office Hours: MWF 1:30-2:20 JEB 220
+
+Mon, Aug 22
+  * Imperitive Langues
+    - Ex: C
+    - Hallmarks
+      * Assignment
+      * Iteration
+      * Order of execution is critical
+  * Functional Langues
+    - Ex: ML, Lisp
+    - Hallmarks
+      * Single-values variables
+      * Heavy use of recursion
+  * Logic
+    - Ex: Prolog
+    - Hallmarks
+      * Program expressed as rules in formal logic
+  * Object Oriented
+    - Ex: C++, Java
+    - Hallmarks
+      * Usually an extension of imperitive programming
+      * Constructs to help programmers use 'objects'
+
+Wed, Aug 24
+  Strengths and Weaknesses
+    Different language groups show to advantage on different kinds of problems
+    Decide for yourself at the end of the semster, after experimenting with them
+    For now, one comment: don't jump to conclusions based on factorial!
+
+Fri, Aug 26
+  About those families
+    There are many other language family terms (not exhaustive and sometimes overlapping)
+      - Applicative, concurrent, constraint, declarative, definitional, procedural, scripting, single-assignment
+    Some *multi-paradigm languages straddle families: JavaScript, OCaml, Python, Ruby
+    Others are so unique that assigning them to a family is pointless
+
+  Forth Factorial (Language that cannot be classified into a category)
+  ```
+  : FACTORIAL
+    1 SAP BEGIN ?DUP WHILE TUCK * SWAP 1- REPEAT ;
+  ```
+    Stack oriented language
+    Postscript is similar
+    Could be called imperative, but has little in common with most imperative languages
+
+Mon, Aug 29
+  Fighting the Language
+    - Languages always favor a particular style, but do not force the programmer to follow it
+    - It is always possible to write in a style not favored by the language
+    - It is not usually a good idea
+  Programming Experience Influenced Language Design
+    - Corrections to design problems make future dialects, as already noted
+    - Programming styles can emerge before there is a language that supports them
+      * Programming with objects predated object-oriented languages
+      * Automated theorem proving predates logic languages
+  Other connections: Computer Architecture
+    - Language evolutino drives and is driven by hardware evolution
+      * Call stack support - languages with recursion
+      * Parallel architectures - parallel languages
+      * Internet - Java
+  Turing Equivalence
+    - Languages have different strengths, but fundamentally they all have the same power
+    - All have the same power as various mathematical models of computation
+    - Church-turing thesis: This is what 'computability' means
+
+  Defining Program Syntax
+    - Syntax: How programs look, their form and structure
+      * Syntax is defined using a kind of formal grammar
+    - Semantics: What programs do, their behavior and meaning
+      * Axiomatic: using axioms to derive meaning of a program
+      * Operational: Specifying how the VM interprets your programs
+      * Denotational: Mathematical formalism
+  Grammar
+    - English Grammar: 
+      <S> ::= <NP><V><NP>
+      <NP> ::= <A><N>
+      * The grammar is a set of rules that say how to build a tree - A parse tree
+      * You put <S> at the root of the tree
+      * The grammar's rules say how children can be added at any point in the tree
+      * for insttance, the rule <s> ::= <NP> <V> <NP> says you can add nodes <NP>, <V>, and <NP> in that order, as children of <S>
+    - Programming language Grammar
+      <exp> ::= <exp> + <exp> | <exp> * <exp> | ( <exp> | a | b | c )
+      * An expression can be the sum of two expressions, or the product of two expressions, or a parenthesized subexpression
+      * Or it can be one of the variables a, b, or c
+
+Wed, Aug 31
+  A BNF grammar consists of four parts
+    - A set of tokens
+    - The set of non-terminal symbolsence of one or more things, each of which a non-terminal or a token
+    - The start symbol
+    - The set of productions
+
+    The Productions are the tree building rules
+    Each one has a left side, the separator ::= and a right side
+    - The right hand side can be a sequ
