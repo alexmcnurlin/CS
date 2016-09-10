@@ -35,3 +35,37 @@ Fri, Sep 2
     Section headers:
       .data: Global initialized data
       .bss: Global uninitialized data
+
+Fri, Sep 9
+  elf - Linux only
+  coff - Windows (.exe)
+  macho - MacOS (.com)
+
+  Linux utilities
+    cancel
+    cat
+    chgrp
+    chmod
+    chown
+    clear
+    cp
+    dateemacs
+    filegroups
+    headlp
+    lpr
+    lprm
+    lpq
+    lpstat
+    ls
+    mail
+    manmkdir
+    moremv
+    nnewgrp
+    passwd
+    pwd
+    rm
+    rmdir
+    rtty
+    tailtset
+    vim
+    wc
