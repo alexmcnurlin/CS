@@ -1,2 +1,11 @@
-all: main.c bubble_sort.h quick_sort.h
-	gcc main.c bubble_sort.h quick_sort.h -o hw1
+all: bubble_sort quicksort insertion_sort
+	
+
+bubble_sort: bubble_sort.c
+	gcc bubble_sort.c -o bubble_sort
+
+insertion_sort: insertion_sort.c
+	gcc insertion_sort.c -o insertion_sort
+
+quicksort: quicksort.c
+	gcc quicksort.c -o quicksort
