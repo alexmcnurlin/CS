@@ -96,3 +96,16 @@ Wed, Aug 31
     The Productions are the tree building rules
     Each one has a left side, the separator ::= and a right side
     - The right hand side can be a sequ
+
+Mon, Sep 12
+  Operator Terminology
+    - Infix: a + b
+    - Prefix: + a b
+    - Postfix: a b +
+    Unary Operators: Can be either Prefix or Postfix
+  <exp> ::= <exp> + <exp> | <exp> * <exp> | (<exp>) | a | b | c
+
+  Operator Precedence
+    Applies when the order of evaluation is not completely decided by parentheses
+    Each operator has a precedence leve, and thos with higher precedence are performed before those with lower precedence, as if parenthesized
+    Most languages put * before + such that `a+b*c = a+(b*c)`
