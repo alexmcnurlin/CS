@@ -14,12 +14,6 @@ int arrSize = sizeof(newArr)/sizeof(newArr[0]);
 
 // Takes integers as command line arguments and sorts them using various methods 
 int main(int argc, char* argv[]) {
-  // map arguments into an int array
-  //int newArr[argc];
-  //int arrSize = argc-1;
-  //for (int i=1; i<argc; i++) {
-  //  newArr[i-1] = atoi(argv[i]);
-  //}
   
   bubble_sort(newArr, arrSize);
   insertion_sort(newArr, arrSize);

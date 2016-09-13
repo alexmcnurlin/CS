@@ -9,7 +9,6 @@
 
 int quicksort(int* input, int inputc) {
   printf("Quicksort: \n");
-  int arrSize = sizeof(newArr)/sizeof(newArr[0]);
 
   quick_sort_rec(input, inputc, 0, inputc-1);
 
@@ -19,7 +18,6 @@ int quicksort(int* input, int inputc) {
 
 // Performs a quicksort on the given array
 // Takes array, array size, and first/last indices as arguments
-// Doesn't modify original array
 int quick_sort_rec(int inArr[], int arrSize, int first, int last) {
   // arrSize is the total size of the array. newSize is the size of the portion
   // we're sorting

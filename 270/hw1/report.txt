@@ -1,30 +1,56 @@
 Size of functions:
-  bubble_sort.o: 138
-  quicksort.o: 241
-  insertion_sort.o: 125
-  main.o: 4c
-  hw1 (the main executable): 652
+  bubble_sort: 312
+  // Quicksort is broken into 2 functions, since it's recursive
+  quicksort: 66
+  quick_sort_rec: 504
+  insertion_sort: 125
+  main: 76
 
 Address:
-  bubble_sort.o:    0x0
-  quicksort.o:      0x0
-  insertion_sort.o: 0x0
-  main.o:           0x0
-  hw1:              0x4004c0
+  bubble_sort:    0x400602
+  quicksort:      0x40073a
+  quick_sort_rec: 0x40077c
+  insertion_sort: 0x400794
+  main:           0x4005b6
 
-Entry Point:
-  bubble_sort.o:    0x0
-  quicksort.o:      0x0
-  insertion_sort.o: 0x0
-  main.o:           0x0
-  hw1:              0x4004c0
+Entry Point Name: _start
+Entry Point Name: 0x4004c0
 
-Locations of subroutines:
-  hw1: printf @ 0x0
+Locations and Names of Subroutines
+  The name is 'printf@GLIBC_2.2.5 (2)', but it has no address since it's dynamically linked
 
-Location and Size:
-  bubble_sort.o:    0x0
-  quicksort.o:      0x0
-  insertion_sort.o: 0x0
-  main.o:           0x0
-  hw1:              0x4004c0
+Locations and Sizes of Data sections
+  Name        Size      Location
+  .data       0x54        0x601040
+  .bss        0x04        0x601094
+
+
+################################################
+After compiling with the -O flag
+################################################
+
+Size of functions:
+  bubble_sort: 147
+  // Quicksort is broken into 2 functions, since it's recursive
+  quicksort: 56
+  quick_sort_rec: 253
+  insertion_sort: 160
+  main: 62
+
+Address:
+  bubble_sort:    0x400614
+  quicksort:      0x4007a4
+  quick_sort_rec: 0x4006a7
+  insertion_sort: 0x4007dc
+  main:           0x4005b6
+
+Entry Point Name: _start
+Entry Point Name: 0x4004e0
+
+Locations and Names of Subroutines
+  The name is 'printf@GLIBC_2.3.4', but it has no address since it's dynamically linked
+
+Locations and Sizes of Data sections
+  Name        Size      Location
+  .data       0x70        0x601040
+  .bss        0x08        0x6010b0
