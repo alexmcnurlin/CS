@@ -1,0 +1,30 @@
+Size of functions:
+  bubble_sort.o: 138
+  quicksort.o: 241
+  insertion_sort.o: 125
+  main.o: 4c
+  hw1 (the main executable): 652
+
+Address:
+  bubble_sort.o:    0x0
+  quicksort.o:      0x0
+  insertion_sort.o: 0x0
+  main.o:           0x0
+  hw1:              0x4004c0
+
+Entry Point:
+  bubble_sort.o:    0x0
+  quicksort.o:      0x0
+  insertion_sort.o: 0x0
+  main.o:           0x0
+  hw1:              0x4004c0
+
+Locations of subroutines:
+  hw1: printf @ 0x0
+
+Location and Size:
+  bubble_sort.o:    0x0
+  quicksort.o:      0x0
+  insertion_sort.o: 0x0
+  main.o:           0x0
+  hw1:              0x4004c0

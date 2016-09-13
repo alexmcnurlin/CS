@@ -5,18 +5,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "quicksort.h"
 
-int quick_sort_rec(int inArr[], int arrSize, int first, int last);
-
-int main(int argc, char* argv[]) {
+int quicksort(int* input, int inputc) {
   printf("Quicksort: \n");
-
-  // map arguments into an int array
-  int input[argc];
-  int inputc = argc-1;
-  for (int i=1; i<argc; i++) {
-    input[i-1] = atoi(argv[i]);
-  }
+  int arrSize = sizeof(newArr)/sizeof(newArr[0]);
 
   quick_sort_rec(input, inputc, 0, inputc-1);
 

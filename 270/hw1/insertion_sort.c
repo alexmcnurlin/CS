@@ -1,21 +1,15 @@
 // Alex McNurlin
 // 9/14/16
 // CS270
-// insertion.c
+// insertion_sort.h
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "insertion_sort.h"
 
 // Implements an insertion sort
-int main(int argc, char* argv[]) {
+int insertion_sort(int input[], int inputc) {
   printf("Insertion sort: \n");
-
-  // map arguments into an int array
-  int input[argc];
-  int inputc = argc-1;
-  for (int i=1; i<argc; i++) {
-    input[i-1] = atoi(argv[i]);
-  }
 
   for (int i=1; i<inputc; i++) {
     for (int j=i; j>0; j--) {
