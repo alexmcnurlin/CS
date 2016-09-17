@@ -12,10 +12,10 @@ int is_string(      char ch1);
 int is_char(        char ch1);
 int is_operator(    char ch1,char ch2);
 
-int mark_as_unknown(char ch1,char ch2, FILE *fp);
+int mark_as_unknown(char  ch1,char  ch2, FILE *fp);
 int get_keyword(    char *ch1,char *ch2, FILE *fp);
 int get_operator(   char *ch1,char *ch2, FILE *fp);
-int get_char(       char *ch1,          FILE *fp);
+int get_char(       char *ch1,char *ch2, FILE *fp);
 int get_number(     char *ch1,char *ch2, FILE *fp);
 int get_comment(    char *ch1,char *ch2, FILE *fp);
 int get_string(     char *ch1,char *ch2, FILE *fp);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     } else if (is_string(ch1)) {
       get_string(&ch1,&ch2, fp);
     } else if (is_char(ch1)) {
-      get_char(&ch1, fp);
+      get_char(&ch1,&ch2,fp);
     } else if (is_operator(ch1,ch2)) {
       get_operator(&ch1,&ch2, fp);
     } else {
@@ -205,12 +205,17 @@ int get_operator(char *ch1,char *ch2, FILE *fp) {
   printf("%c%c (operator)\n", *ch1, *ch2);
 }
 
-int get_char(char *ch1, FILE *fp) {
+int get_char(char *ch1, char*ch2, FILE *fp) {
   fseek(fp, -2, SEEK_CUR);
-  char the_char[4];
-  fscanf(fp, "%2c", the_char);
+  char the_char[3];
+  fscanf(fp, "%3s", the_char);
   fseek(fp, -1, SEEK_CUR);
+  *ch1 = getc(fp);
+  *ch2 = getc(fp);
+  //printf("ch1: %c, ch2: %c\n", *ch1, *ch2);
   printf("%s (character literal)\n", the_char);
+
+  return 0;
 }
 
 int get_number(char *ch1,char *ch2, FILE *fp) {
