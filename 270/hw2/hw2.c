@@ -10,43 +10,47 @@
 int makearg(char* s, char*** args);
 
 int main() {
+  // The maximum size of command that a user can enter
   const int INPUT_SIZE = 256;
-  //char input[INPUT_SIZE]; 
-  char input[] = "ls -lash /home/alexmcnurlin/";
+  char input[INPUT_SIZE]; 
+
   printf("Please enter a command\n");
-  int length = sizeof(input)/sizeof(input[0]);
-  printf("%s\n", input);
+  fgets(input, INPUT_SIZE, stdin);
 
-  char **argv;
-  makearg(input, &argv);
+  char** argv;
+  int argc;
+  argc = makearg(input, &argv);
 
-  int i=0;
-  int length = sizeof(argv)/sizeof(argv[0]);
-  while (i<length) {
-    printf("%s\n", argv[i]);
-    i++;
+  for (int i=0; i<argc; i++) {
+    printf("Argument %i: %s\n", i+1, argv[i]);
   }
 }
 
 int makearg(char *s, char ***args) {
-  //int length = sizeof(s)/sizeof(s[0]);
-  //char *testParse = s;
-  //  printf("%i ", length);
-  //int i = 0;
-  //while (i != '\000') {
-  //  printf("%i ", i);
-  //  //printf("%c", s[i]);
-  //  i++;
-  //}
-
   const int ARR_SIZE = 10;
-  
-  char **p = (char**)malloc(ARR_SIZE*sizeof(char**));
-  char *token = strtok(s, " ");
+  //char **p = (char**)malloc(ARR_SIZE*sizeof(char**));
+
+  // Allocate space with this bizarre command
+  // p will eventually be assigned to args as our output
+  char** p = (char**)malloc(ARR_SIZE*sizeof(char**));
+
+  int i=0;
+  // Break the string into tokens, and assign them to the pointer p
+  char* token = strtok(s, " ");
   while (token != NULL) {
-    //printf("%s\n", token);
+    // If the token is a space, then skip this loop and continue
+    // If the number of arguments is greater than ARR_SIZE, exit with an error
+    if (*token == 32) {
+      continue;
+    } else if (i>=ARR_SIZE) {
+      printf("Error, this function can only accept %i arguments\nExiting...", ARR_SIZE);
+      return -1;
+    }
+    p[i] = token;
     token = strtok(NULL, " ");
+    i++;
   }
 
-  args = &p;
+  *args = p;
+  return i;
 }
