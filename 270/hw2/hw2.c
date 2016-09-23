@@ -14,13 +14,17 @@ int main() {
   const int INPUT_SIZE = 256;
   char input[INPUT_SIZE]; 
 
-  printf("Please enter a command\n");
+  // Get user input
+  printf("Please enter a command (limit to 256 characters)\n");
   fgets(input, INPUT_SIZE, stdin);
 
+  // Initialize array stuff
   char** argv;
   int argc;
+
   argc = makearg(input, &argv);
 
+  // Print arguments of array
   for (int i=0; i<argc; i++) {
     printf("Argument %i: %s\n", i+1, argv[i]);
   }
@@ -40,9 +44,7 @@ int makearg(char *s, char ***args) {
   while (token != NULL) {
     // If the token is a space, then skip this loop and continue
     // If the number of arguments is greater than ARR_SIZE, exit with an error
-    if (*token == 32) {
-      continue;
-    } else if (i>=ARR_SIZE) {
+    if (i>=ARR_SIZE) {
       printf("Error, this function can only accept %i arguments\nExiting...", ARR_SIZE);
       return -1;
     }
@@ -51,6 +53,7 @@ int makearg(char *s, char ***args) {
     i++;
   }
 
+  // Sets our array that's been built to be returned, as well as returning the length of the array
   *args = p;
   return i;
 }
