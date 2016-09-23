@@ -74,7 +74,7 @@ Mon, Aug 29
       * Operational: Specifying how the VM interprets your programs
       * Denotational: Mathematical formalism
   Grammar
-    - English Grammar: 
+    - English Grammar:
       <S> ::= <NP><V><NP>
       <NP> ::= <A><N>
       * The grammar is a set of rules that say how to build a tree - A parse tree
@@ -109,3 +109,43 @@ Mon, Sep 12
     Applies when the order of evaluation is not completely decided by parentheses
     Each operator has a precedence leve, and thos with higher precedence are performed before those with lower precedence, as if parenthesized
     Most languages put * before + such that `a+b*c = a+(b*c)`
+
+Fri, Sep 16
+  Language Systems
+    * The Classical Sequence
+      - IDEs are wonderful, but...
+      - Old-fashioned, un-integrated systems make the steps involved in running a program more clear
+      - We will look the classical sequence of steps involved in running a program
+
+      Integrated Development Environment
+      Toolchain:
+        A series of tools that have inputs/outputs changed together
+        Various tools can (theoretically) be swapped out
+        Hard to change in IDEs
+
+    Creating
+      - The programmer uses an editor to create a text file containing the program
+      - A high-level language: Machine independent
+
+    Compiling
+      - Compiler translates to assembly language
+      - Machine-specific
+      - Each line represents either a piece of data, or a single machine-level instruction
+      - Programs used to be written directly in assembly language, before Fortran
+      - Now used directly only when the compiler does not do what you want, which is rare
+
+    Assembling
+      - Assembly language is still not directly executable
+        * Text format, readable by people
+        * Still has names, not memory addresses
+        * Assembler converts each assembly-language instruction into the machine's binary format: its machine language
+        * Resulting object file not readable by people
+
+    Linking
+      - Object file still not directly executable
+        * Missing some parts
+        * Still has some names
+        * Mostly machine language, but not entirely
+      - Linker collects and combines all the different parts
+      - Result is the executable file
+
