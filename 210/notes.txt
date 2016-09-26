@@ -149,3 +149,66 @@ Fri, Sep 16
       - Linker collects and combines all the different parts
       - Result is the executable file
 
+Fri, Sep 23
+  Virtual Machines
+    Cross-platform execution
+      - vm can be implemented in software on many different platforms 
+      - simulating physical machines is harder
+    Heightened security
+      - Running program is never directly in charge
+      - Interpreter can intervene if the program tries to do something it shouldn't
+  The Java Virtual Machine
+    Java languages systems usually compile to code for a VM, the JVM
+    JVM language is sometimes called bytecode
+    Bytecode interpeter is part of almost every webbrowser
+    When you browse a ge that contains a Java applet, the browser runs the applet by interpreting its bytecode
+  Types if intepreters
+    Pure interpreter
+      Intermediate language = high-level language
+    Tokenizing interpreter
+      Intermediate language = token stream
+    Intermediate-code compiler
+      Intermediate language = virtual machine language
+    Native-code compiler
+      Intermediate language = physical machine language
+
+    Delayed Linking
+      Delay linking step
+      Code for library functions is not included in the executable file of the calling program
+      Windows:
+        - Libraries of functions for delayed linking are stored in .dll files: dynamic-link library
+        - Many language systems share this format
+        Two flavors:
+          - Load-time dynamic linking
+            * Loader finds .dll files and links the program to functions it needs, just before running
+          - Run-time dynamic linking
+            * Running program makes explicit system calls to find .dll files and load specific functions
+      Unix:
+        - Libraries of functions for delayed linnking are stored in .so files: shared object
+        - Suffix .so followed by version number
+        - Many language systems share this format
+        - Two flavors
+          - shared libraries: 
+            * Loader linnks the program to functions it needs before running
+          - Dynamically 
+            * Running program makes explicit system calls to find library files and load specific functions
+      Java:
+        - JVM automatically loads and links classes when a program uses them
+        - Class loader does a lot of work
+          * may load across internet
+          * Thoroughly checks loaded code to make sure it complies with JVM requirements
+      Delayed Linking Advanteges
+        - Multiple programs can share a copy of library functions: one copy on disk and in memory
+        - Library functions can be updated independently of programs: all programs use repaired library code next time they run
+        - Can avoid loading code that is never used
+      Profiling:
+        - The classical sequence runs twice
+        - Fist run collects statistics: parts frequently executed, for example
+        - Second compilation uses this information to help generate better code
+      Dynamic compilation
+        Some compiling takes place after the program starts running
+        Variations
+          Compile each function only when called
+          Start by interpreting, compile only those pieces that are called frequently
+          Compiler roughly at first, then spend more time on frequently executed pieces (i.e. optimize)
+        JIT compilation
