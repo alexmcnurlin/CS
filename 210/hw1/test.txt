@@ -1,3 +1,11 @@
-'c''h'allo
-if
+/* I am a single line comment */
+/* I am a
+multi
+line
+comment*/
+<<
+d.y;
+'c''h';allo
+if;
 hello
+.12#34156.125_154

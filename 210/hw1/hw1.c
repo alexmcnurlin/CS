@@ -1,5 +1,5 @@
 // Alex McNurlin
-// HW1
+// HW1 
 // 10/14/16
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +39,8 @@ int main(int argc, char *argv[]) {
   char ch1=1, ch2=getc(fp);
 
   while ((ch1 = ch2) && (ch2 = getc(fp)) != EOF) {
-    if (ch1 == ' ' || ch1 == '\n' || ch1 == '\t') {
+    //printf("outside function: Testing ch1(%c) and ch2(%c)\n", ch1, ch2);
+    if (ch1 == ' ' || ch1 == '\n' || ch1 == '\r' || ch1 == '\t') {
       continue;
     } else if (is_alpha(ch1)) {
       get_keyword(&ch1,&ch2, fp);
@@ -57,8 +58,6 @@ int main(int argc, char *argv[]) {
       mark_as_unknown(ch1,ch2, fp);
     }
 
-    printf("\n");
-    
   }
   /* char temp_char[1]; */
   /* do { */
@@ -170,7 +169,7 @@ int get_keyword(char *ch1,char *ch2, FILE *fp) {
   fseek(fp, -1, SEEK_CUR);
   *ch1 = getc(fp);
   *ch2 = getc(fp);
-  fseek(fp, -1, SEEK_CUR);
+  //fseek(fp, -1, SEEK_CUR);
 
   //printf("%c%c (ch1, ch2 after scan)\n", *ch1, *ch2);
 
@@ -202,7 +201,29 @@ int get_keyword(char *ch1,char *ch2, FILE *fp) {
 }
 
 int get_operator(char *ch1,char *ch2, FILE *fp) {
-  printf("%c%c (operator)\n", *ch1, *ch2);
+  // Arrays containing the operators separated by length
+  char* operators_length_2[] = {":=", "..", "<<", ">>", "<>", "<=", ">=", "**", "!=", "=>"};
+  int len_2 = sizeof(operators_length_2)/sizeof(operators_length_2[0]);
+  char operators_length_1[] = {'.', '<', '>', '(', ')', '+', '-', '*', '/', '|', '&', ';', ',', ':', '[', ']', '='};
+  int len_1 = sizeof(operators_length_1)/sizeof(operators_length_1[0]);
+
+  // Check if it's an operator of length 2 and break if it is
+  for (int i=0; i<len_2; i++) {
+    if (*ch1==operators_length_2[i][0] && *ch2==operators_length_2[i][1] ) {
+      printf("%c%c (operator)\n", *ch1, *ch2);
+      // Move the file pointer and ch pointers forward as necessary
+      *ch1 = *ch2;
+      *ch2 = getc(fp);
+      return 0;
+    }
+  }
+  // Check if the operator is only of length 1 and break if it is
+  for (int i=0; i<len_1; i++) {
+    if (*ch1==operators_length_1[i]) {
+      printf("%c (operator)\n", *ch1);
+      return 0;
+    }
+  }
 }
 
 int get_char(char *ch1, char*ch2, FILE *fp) {
@@ -219,11 +240,27 @@ int get_char(char *ch1, char*ch2, FILE *fp) {
 }
 
 int get_number(char *ch1,char *ch2, FILE *fp) {
-  printf("It's a number!\n");
-  return 0;
+  char number[256];
+  fseek(fp, -2, SEEK_CUR);
+  fscanf(fp, "%255[0-9a-fA-f._#]", number);
+  printf("%s (number)\n", number);
+  *ch1 = *ch2;
+  *ch2 = getc(fp);
 }
 
 int get_comment(char *ch1,char *ch2, FILE *fp) {
+  // Wonderful mess of parenthesis and logic
+  // continuously print out characters until '*/' is reched
+  while (!(*ch1 == '*' && *ch2 == '/')) {
+    printf("%c", *ch1);
+    *ch1 = *ch2;
+    *ch2 = getc(fp);
+  }
+  // Print the final characters of the comment and update ch1, ch2, and the file
+  // pointer to be where we want
+  printf("*/ (comment)\n");
+  *ch1 = *ch2;
+  *ch2 = getc(fp);
 }
 
 int get_string(char *ch1,char *ch2, FILE *fp) {
