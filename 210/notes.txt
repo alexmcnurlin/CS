@@ -212,3 +212,179 @@ Fri, Sep 23
           Start by interpreting, compile only those pieces that are called frequently
           Compiler roughly at first, then spend more time on frequently executed pieces (i.e. optimize)
         JIT compilation
+
+Mon, Sep 26
+  Binding
+    - Associating two things, especially associating some property with an identifier from the program
+    - Can be done at multiple time
+      * Language definition time (creaing a language)
+        - Meaning of keywords like void, for, while ect (and datatypes in java)
+      * Language implementation (Writing a compiler for the system in question)
+        - Range of values of type int in C
+        - Implementation limitations: Max identifier length, max array dimensions, ect
+      * Compile time
+        - Types of variables in statically typed languages
+        - Declaration that goes with the given use of a variable
+      * Link time
+        - When separately-compiled program parts are combined into one executable
+        - Object code for external function names
+      * Load time
+        - Memory locations
+      * Runtime
+        - Values, types of variables
+        - Declaration that goes with a variable
+        - Also called late or dynamic binding
+
+    Late vs Early binding
+      Late
+        * more flexible
+      Early
+        * faster and more secure (less to do, less to go wrong)
+  Debuggers
+    * Examine a snapsopt, such as a core dump
+    * Examine a running program on the fly
+      - Stepping, breakpointing, modifying variables
+    * Modify currently running program
+    * Advanced debugging features require an IDE
+
+Wed, Sep 28
+  Debugging 
+    - Examine a snapshot, such as a core dump
+    - Examine a running program on the fly
+      * Single stepping, breakpointing, modifying variables
+    - Modify currently running program
+      * Recompiler, relink, reload parts while program runs
+    - Advanced debugging features may require an IDE
+  
+  Debugging information
+    - What is ececuting?
+    - What is the traceback of calls leading there
+    - What are the values of variables
+    - Source-level information from machine-level code
+      - Variables and functions by name
+      - Code locations by source position
+    - Connection between levels can be hard to maintain, for example because of optimization
+  
+  Runtime Support
+    - Additional code the linker includes even if the program does not refer to it explicitly
+      * Startup processing: initializing the machine state
+      * Exception handling: reacting to exceptions
+      * Memory management: Allocating memory, reusing it when the program is finished with it
+      * Operating system interface: Communicating between running program and operating system for I/O, etc
+    - An important hidden player in language systems
+
+  ML
+    - Meta Language
+    - One of the more popular functional languages
+    - Edinburgh Scotland, 1974, Robin Milner's group
+    - Many dialects, we're using Standard ML
+    - Case sensitive
+
+  Type system
+    - int: Standard int
+      * use tilde (~) for unary negation. ~1 is 'negative 1'
+      * Still use - for binary subtraction
+    - real: Real number
+    - bool: Boolean
+      * true, false
+    - string: Text in double quotes
+      * Can use C-style escapes
+    - char: Character
+      * put # before a 1 character string (#"c")
+
+  Operators
+    - Standard operators for integers, using ~ for unary negation and - for binary subtraction
+      +, -, *, div, mod
+    - Same operators but use / for division
+      +, -, *, /, mod
+    - Precedence:
+      (+,-) < (*,/,div,mod) < (~)
+    - String concatination
+      ^
+      "hello " ^ "world"; => "hello world"
+    - Ordering comparisons
+      <, <=, >, >= 
+      Valid for int, real, string, char
+    - Equality testing
+      = Test equality (similar to == in C)
+      <> not equal (similar to != in C)
+      Cannot test equality on floats
+    - Boolean operators
+      * andalso (similar to and in C)
+      * orelse (similar to or in C)
+      * not
+      {orelse} < {andalso} < {=,<>,<,>,<=,>=} < {+,-,^} < {*,/,div,mod} < {~,not}
+
+Fri, Sep 30
+  If statement: similar to C ternary statement
+    if 1<2 then #"x" else #"y";
+    There is no if/then, just if/then/else
+  Functions: you apply a function to an argument in ML by putting the function name next to it, parentheses are optional.
+    floor 3.6
+    floor(3.6)
+    `f a b` is the same as `(f a) b`
+    square 2+1 ==> square(2) + 1 ==> 5
+    square (2+1) ==> 9
+  Assignment
+    val x = 1+2*3 ==> "val x = 7 : int"
+    val y = if x = 7 then 1.0 else 2.0
+
+Mon, Oct 3
+  You can define a new variable with the same name as an old one, even a different type
+  However, it doesn't reassign the variable, it creates a totally new variable. 
+  Any part of the program using the old variable still does. Anything using the new variable uses the new one
+
+  By typing just an expression, the results get assigned to a variable called 'it'
+
+  Tuple
+    - Use parentheses to form tuples
+    - Tuples can contain other tuples
+    - A tuple is like a record with no filed names
+    - To get the i'th element of a tuple x, use #i x
+
+  Type constructor *
+    - int * int * bool ==> (int, int, bool)
+    - (int * int) * bool ==> ((int, int), bool)
+
+  Lists
+    - Like Tuples, but must be homogeneous
+    - [1,2,3]  ==> int list
+    - [1,2.0,3] ==> Will throw error
+    - [[1, 2], [4, 5, 6]] ==> int list list
+
+  Nil
+    - Empty list [] is nil
+    - val it = [] ==> 'a list
+    - Variable beginning in 'a is an unknown type
+    - 'a list means list of unknown type
+  
+  Null test
+    - null x ==> tests if x is null
+    - You could also do x=[], but null x is preferred
+
+  List constructor
+    - int list ==> a list of ints
+
+  List operatrions
+    - @ ==> Concatenates a list
+      * [1,2,3]@[4,5,6] ==> [1,2,3,4,5,6]
+    - :: ==> list builder operator (pronounced cons)
+      * 1::[2,3,4] ==> pushes 1 to the beginning of a list
+      * Right associative
+    - hd 
+      * function gets head of list
+      * hd [1,2,3] ==> [1]
+    - tl
+      * gets tail of list (Everything but first element)
+      * tl [1,2,3] ==> [2,3]
+    - explode
+      * Takes string and returns list of characters
+    - implode
+      * Takes list of characters and returns string
+
+  Functions:
+    - defined using the fun keyword
+    - fun <function-name> <parameter> = <expression>;
+    - fun firstChar s = hd (explode s);
+    - All functions only take one parameter. If you need multiple values, you can pass a tuple;
+
