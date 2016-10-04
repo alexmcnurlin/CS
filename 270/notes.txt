@@ -145,3 +145,62 @@ Wed, Sep 21
     - All make the connection between source code an object code more complicated
     - A simple question, such as "What assembly language code was generated for this statement?" may have a complicated answer.
 
+Mon, Oct 3
+  Shell commands
+    - alias
+      * alias command to a different command
+    - bg
+    - builtin
+    - case..in..esac
+    - cd
+    - declare
+      * Will declare a variable
+      * -a Will declare it as an array
+    - dirs
+    - env
+      * Runs a new environment with the specified environment variables
+    - export
+      * Marks the specified variables for export to the environment. 
+    - fg
+    - for..do..done
+    - function
+    - history
+    - if..then..elif..then..else..fi
+    - jobs
+    - kill
+    - local
+    - popd
+    - pushd
+    - read
+      * Reads a line of text from STDIN
+      * read var1 var2
+        - Reads first word into var1 and second into var2
+    - readonly
+    - return
+    - select..do..done
+    - set
+    - source
+    - trap
+    - unalias
+    - unset
+    - until..do..done
+    - while..do..done
+
+  Variables
+    $name, ${name}
+
+  $. current shell options assigned from command line
+  $$ process ID for this shell
+  $! Process ID of the last basckground command
+  $# number of positional parameters
+  
+  !! replaced with last command
+  !n replaced with the nth command in the shell
+  !.n replaced with the text of the nth command
+  !prefix search for the last command starting with prefix
+  !?substring? replaced with the text of the last command containing substring
+
+  (( operation )) 
+    - Math!
+    - Operators
+      +, -, ++, --, *, /, %, **, <=, >=, <, >, ==, !=, 
