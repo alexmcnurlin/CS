@@ -1,0 +1,48 @@
+#! /usr/bin/env bash
+file=$1
+function usage() {
+  echo "Usage";
+  exit 1;
+}
+
+# Shamelessly borrowed from various stackoverflow posts
+while getopts "efilr" o; do
+  case "${o}" in
+    e)
+      e=1;
+      echo "Argument is ${o}";
+      ;;
+    f)
+      f=1;
+      echo "Argument is ${o}";
+      ;;
+    i)
+      i=1;
+      echo "Argument is ${o}";
+      ;;
+    l)
+      l=1;
+      echo "Argument is ${o}";
+      ;;
+    r)
+      r=1;
+      echo "Argument is ${o}";
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+function main() {
+  if [ -d "./roundfile" ]; then
+    #mv $file "./roundfile/$file";
+    echo "Moving $file to ./roundfile"
+  else
+    if [ ! -d "roundfile" ]; then
+      echo "Creating $HOME/roundfile";
+      #mkdir "$HOME/roundfile/"
+    fi
+    #mv $file "$HOME/roundfile/$file";
+  fi
+}
