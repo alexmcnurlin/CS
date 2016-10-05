@@ -5,7 +5,9 @@ function usage() {
   exit 1;
 }
 
-# Shamelessly borrowed from various stackoverflow posts
+# Shamelessly borrowed from various stackoverflow posts.
+# Loops through the options and performs the necessary operations.
+# Shows usage information if an invalid flag is passed.
 while getopts "efilr" o; do
   case "${o}" in
     e)
@@ -46,3 +48,4 @@ function main() {
     #mv $file "$HOME/roundfile/$file";
   fi
 }
+
