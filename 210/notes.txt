@@ -479,3 +479,50 @@ Fri, Oct 7
       - This may even be exposed to the programmer, as it is in C
       In C:
         enum coin { penny = 1, nickel = 5, dime = 10, quarter = 25  };
+
+Mon, Oct 10
+  Operations on Enumeration Values
+    ```SML
+      fun isWeekend x = (x = Sa orelse x = Su);
+    ```
+    If the integer nature of the representation is exposed, a language will allow some or all integer operations
+
+  Making sets by Tupling
+    * The Cartesian product of two or more sets defines sets of tuples
+    Some languages support pure tuples
+      fun get1 (x : real * real) = #1 x;
+    Many others support record types, which are just tuples with named fields
+      ```SML
+        type complex = {
+          rp:real,
+          ip:real
+        };
+        fun getip (x: complex) = #ip x;
+      ```
+    Representing Tuple Values
+      A common reprsentation is to just place the elements side-by-side in memroy
+      There are lots of details
+        - In what order
+        - With holes to align elements (word boundries, ect) in memory
+        - Is any or all of this visible to the programmer?
+    Operations on Tuple Values
+      - Selection, of course
+        C: x.ip
+        ML: #ip x
+      - Other operations, depending on how much of the implementation is exposed
+    Size of vectors
+      *insert discrete math symbols here*
+    Types Related to Vectors
+      - Arrays, strings, and lists
+      - Like tuples, but with many variates
+      - One example: indexes
+        * What are the index values?
+        * Is the array size fixed at compile time?
+    Index Values
+      - Java, C, C++
+        * First element of array a is a[0]
+        * zero indexed
+      - Pacal is more flexible
+        * Various index types are possible: inegers, characters, enumerations, subranges
+        * Starting index chosen by the programmer
+        * Ending index too: Size is fixed at compile time
