@@ -204,3 +204,75 @@ Mon, Oct 3
     - Math!
     - Operators
       +, -, ++, --, *, /, %, **, <=, >=, <, >, ==, !=, 
+
+Wed, Oct 5
+  declare -i variable=1 # Declare $variable to be an int
+  (( something = somethingElse )) # space is required around assignment in (( ))
+
+  test command "[ flag filename ]"
+    -a, -e true if file exists
+    -b true if file exists and is block-oriented
+    -c true if file exists and is a character-oriented special file
+    -d exists and is directory
+    -f regular file
+    -g, -u "set group ID" is set
+    -p named pipe
+    -r is readable
+    -s size is greater than zero
+    -t descriptor is open and refers to terminal
+    -w file is writable
+    -x is executable
+    -O owned by the effective user ID of user
+    -G owned by effective group ID of user
+    -L is symlink
+    -N modified since last read
+
+    [ -O /etc/passwd ] is the same as `test -O /etc/passwd`
+
+  Control statements
+    Case:
+      * Like switch-case in other languuages
+      * "word" and "pattern" can be an entire word, rather than just one character
+      `case word in
+        pattern)
+          # code
+          ;;
+      esac`
+
+    For:
+      * Similar to python for loop
+      * Iterates over everything in word and assigns it to name
+      for name in word; do
+        # code
+      done
+
+    While:
+      * Like while, but tests while condition is true
+      while test; do
+        # code
+      done
+
+    Until:
+      * Like while, but tests *until* condition is true
+      until test; do
+        # code
+      done
+
+Fri, Oct 7
+  Perl!
+    12345
+    -12345
+    18.75
+    6.02E23
+    0b011011
+    0277
+    0xdead_beef (underscores are allowed, and ignored)
+    "string" (subject to string interpolation)
+    'string' (no interpolation)
+    (1,2,3)
+    
+    3 Types
+      - Scalars
+        * Preceded by $
+        * $name
+        * $age = 26;
