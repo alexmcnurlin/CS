@@ -1,0 +1,481 @@
+Professor: Michael Wilder
+website: `http://www2.cs.uidaho.edu/~mdwilder/cs210/`
+Office Hours: MWF 1:30-2:20 JEB 220
+
+Mon, Aug 22
+  * Imperitive Langues
+    - Ex: C
+    - Hallmarks
+      * Assignment
+      * Iteration
+      * Order of execution is critical
+  * Functional Langues
+    - Ex: ML, Lisp
+    - Hallmarks
+      * Single-values variables
+      * Heavy use of recursion
+  * Logic
+    - Ex: Prolog
+    - Hallmarks
+      * Program expressed as rules in formal logic
+  * Object Oriented
+    - Ex: C++, Java
+    - Hallmarks
+      * Usually an extension of imperitive programming
+      * Constructs to help programmers use 'objects'
+
+Wed, Aug 24
+  Strengths and Weaknesses
+    Different language groups show to advantage on different kinds of problems
+    Decide for yourself at the end of the semster, after experimenting with them
+    For now, one comment: don't jump to conclusions based on factorial!
+
+Fri, Aug 26
+  About those families
+    There are many other language family terms (not exhaustive and sometimes overlapping)
+      - Applicative, concurrent, constraint, declarative, definitional, procedural, scripting, single-assignment
+    Some *multi-paradigm languages straddle families: JavaScript, OCaml, Python, Ruby
+    Others are so unique that assigning them to a family is pointless
+
+  Forth Factorial (Language that cannot be classified into a category)
+  ```
+  : FACTORIAL
+    1 SAP BEGIN ?DUP WHILE TUCK * SWAP 1- REPEAT ;
+  ```
+    Stack oriented language
+    Postscript is similar
+    Could be called imperative, but has little in common with most imperative languages
+
+Mon, Aug 29
+  Fighting the Language
+    - Languages always favor a particular style, but do not force the programmer to follow it
+    - It is always possible to write in a style not favored by the language
+    - It is not usually a good idea
+  Programming Experience Influenced Language Design
+    - Corrections to design problems make future dialects, as already noted
+    - Programming styles can emerge before there is a language that supports them
+      * Programming with objects predated object-oriented languages
+      * Automated theorem proving predates logic languages
+  Other connections: Computer Architecture
+    - Language evolutino drives and is driven by hardware evolution
+      * Call stack support - languages with recursion
+      * Parallel architectures - parallel languages
+      * Internet - Java
+  Turing Equivalence
+    - Languages have different strengths, but fundamentally they all have the same power
+    - All have the same power as various mathematical models of computation
+    - Church-turing thesis: This is what 'computability' means
+
+  Defining Program Syntax
+    - Syntax: How programs look, their form and structure
+      * Syntax is defined using a kind of formal grammar
+    - Semantics: What programs do, their behavior and meaning
+      * Axiomatic: using axioms to derive meaning of a program
+      * Operational: Specifying how the VM interprets your programs
+      * Denotational: Mathematical formalism
+  Grammar
+    - English Grammar:
+      <S> ::= <NP><V><NP>
+      <NP> ::= <A><N>
+      * The grammar is a set of rules that say how to build a tree - A parse tree
+      * You put <S> at the root of the tree
+      * The grammar's rules say how children can be added at any point in the tree
+      * for insttance, the rule <s> ::= <NP> <V> <NP> says you can add nodes <NP>, <V>, and <NP> in that order, as children of <S>
+    - Programming language Grammar
+      <exp> ::= <exp> + <exp> | <exp> * <exp> | ( <exp> | a | b | c )
+      * An expression can be the sum of two expressions, or the product of two expressions, or a parenthesized subexpression
+      * Or it can be one of the variables a, b, or c
+
+Wed, Aug 31
+  A BNF grammar consists of four parts
+    - A set of tokens
+    - The set of non-terminal symbolsence of one or more things, each of which a non-terminal or a token
+    - The start symbol
+    - The set of productions
+
+    The Productions are the tree building rules
+    Each one has a left side, the separator ::= and a right side
+    - The right hand side can be a sequ
+
+Mon, Sep 12
+  Operator Terminology
+    - Infix: a + b
+    - Prefix: + a b
+    - Postfix: a b +
+    Unary Operators: Can be either Prefix or Postfix
+  <exp> ::= <exp> + <exp> | <exp> * <exp> | (<exp>) | a | b | c
+
+  Operator Precedence
+    Applies when the order of evaluation is not completely decided by parentheses
+    Each operator has a precedence leve, and thos with higher precedence are performed before those with lower precedence, as if parenthesized
+    Most languages put * before + such that `a+b*c = a+(b*c)`
+
+Fri, Sep 16
+  Language Systems
+    * The Classical Sequence
+      - IDEs are wonderful, but...
+      - Old-fashioned, un-integrated systems make the steps involved in running a program more clear
+      - We will look the classical sequence of steps involved in running a program
+
+      Integrated Development Environment
+      Toolchain:
+        A series of tools that have inputs/outputs changed together
+        Various tools can (theoretically) be swapped out
+        Hard to change in IDEs
+
+    Creating
+      - The programmer uses an editor to create a text file containing the program
+      - A high-level language: Machine independent
+
+    Compiling
+      - Compiler translates to assembly language
+      - Machine-specific
+      - Each line represents either a piece of data, or a single machine-level instruction
+      - Programs used to be written directly in assembly language, before Fortran
+      - Now used directly only when the compiler does not do what you want, which is rare
+
+    Assembling
+      - Assembly language is still not directly executable
+        * Text format, readable by people
+        * Still has names, not memory addresses
+        * Assembler converts each assembly-language instruction into the machine's binary format: its machine language
+        * Resulting object file not readable by people
+
+    Linking
+      - Object file still not directly executable
+        * Missing some parts
+        * Still has some names
+        * Mostly machine language, but not entirely
+      - Linker collects and combines all the different parts
+      - Result is the executable file
+
+Fri, Sep 23
+  Virtual Machines
+    Cross-platform execution
+      - vm can be implemented in software on many different platforms 
+      - simulating physical machines is harder
+    Heightened security
+      - Running program is never directly in charge
+      - Interpreter can intervene if the program tries to do something it shouldn't
+  The Java Virtual Machine
+    Java languages systems usually compile to code for a VM, the JVM
+    JVM language is sometimes called bytecode
+    Bytecode interpeter is part of almost every webbrowser
+    When you browse a ge that contains a Java applet, the browser runs the applet by interpreting its bytecode
+  Types if intepreters
+    Pure interpreter
+      Intermediate language = high-level language
+    Tokenizing interpreter
+      Intermediate language = token stream
+    Intermediate-code compiler
+      Intermediate language = virtual machine language
+    Native-code compiler
+      Intermediate language = physical machine language
+
+    Delayed Linking
+      Delay linking step
+      Code for library functions is not included in the executable file of the calling program
+      Windows:
+        - Libraries of functions for delayed linking are stored in .dll files: dynamic-link library
+        - Many language systems share this format
+        Two flavors:
+          - Load-time dynamic linking
+            * Loader finds .dll files and links the program to functions it needs, just before running
+          - Run-time dynamic linking
+            * Running program makes explicit system calls to find .dll files and load specific functions
+      Unix:
+        - Libraries of functions for delayed linnking are stored in .so files: shared object
+        - Suffix .so followed by version number
+        - Many language systems share this format
+        - Two flavors
+          - shared libraries: 
+            * Loader linnks the program to functions it needs before running
+          - Dynamically 
+            * Running program makes explicit system calls to find library files and load specific functions
+      Java:
+        - JVM automatically loads and links classes when a program uses them
+        - Class loader does a lot of work
+          * may load across internet
+          * Thoroughly checks loaded code to make sure it complies with JVM requirements
+      Delayed Linking Advanteges
+        - Multiple programs can share a copy of library functions: one copy on disk and in memory
+        - Library functions can be updated independently of programs: all programs use repaired library code next time they run
+        - Can avoid loading code that is never used
+      Profiling:
+        - The classical sequence runs twice
+        - Fist run collects statistics: parts frequently executed, for example
+        - Second compilation uses this information to help generate better code
+      Dynamic compilation
+        Some compiling takes place after the program starts running
+        Variations
+          Compile each function only when called
+          Start by interpreting, compile only those pieces that are called frequently
+          Compiler roughly at first, then spend more time on frequently executed pieces (i.e. optimize)
+        JIT compilation
+
+Mon, Sep 26
+  Binding
+    - Associating two things, especially associating some property with an identifier from the program
+    - Can be done at multiple time
+      * Language definition time (creaing a language)
+        - Meaning of keywords like void, for, while ect (and datatypes in java)
+      * Language implementation (Writing a compiler for the system in question)
+        - Range of values of type int in C
+        - Implementation limitations: Max identifier length, max array dimensions, ect
+      * Compile time
+        - Types of variables in statically typed languages
+        - Declaration that goes with the given use of a variable
+      * Link time
+        - When separately-compiled program parts are combined into one executable
+        - Object code for external function names
+      * Load time
+        - Memory locations
+      * Runtime
+        - Values, types of variables
+        - Declaration that goes with a variable
+        - Also called late or dynamic binding
+
+    Late vs Early binding
+      Late
+        * more flexible
+      Early
+        * faster and more secure (less to do, less to go wrong)
+  Debuggers
+    * Examine a snapsopt, such as a core dump
+    * Examine a running program on the fly
+      - Stepping, breakpointing, modifying variables
+    * Modify currently running program
+    * Advanced debugging features require an IDE
+
+Wed, Sep 28
+  Debugging 
+    - Examine a snapshot, such as a core dump
+    - Examine a running program on the fly
+      * Single stepping, breakpointing, modifying variables
+    - Modify currently running program
+      * Recompiler, relink, reload parts while program runs
+    - Advanced debugging features may require an IDE
+  
+  Debugging information
+    - What is ececuting?
+    - What is the traceback of calls leading there
+    - What are the values of variables
+    - Source-level information from machine-level code
+      - Variables and functions by name
+      - Code locations by source position
+    - Connection between levels can be hard to maintain, for example because of optimization
+  
+  Runtime Support
+    - Additional code the linker includes even if the program does not refer to it explicitly
+      * Startup processing: initializing the machine state
+      * Exception handling: reacting to exceptions
+      * Memory management: Allocating memory, reusing it when the program is finished with it
+      * Operating system interface: Communicating between running program and operating system for I/O, etc
+    - An important hidden player in language systems
+
+  ML
+    - Meta Language
+    - One of the more popular functional languages
+    - Edinburgh Scotland, 1974, Robin Milner's group
+    - Many dialects, we're using Standard ML
+    - Case sensitive
+
+  Type system
+    - int: Standard int
+      * use tilde (~) for unary negation. ~1 is 'negative 1'
+      * Still use - for binary subtraction
+    - real: Real number
+    - bool: Boolean
+      * true, false
+    - string: Text in double quotes
+      * Can use C-style escapes
+    - char: Character
+      * put # before a 1 character string (#"c")
+
+  Operators
+    - Standard operators for integers, using ~ for unary negation and - for binary subtraction
+      +, -, *, div, mod
+    - Same operators but use / for division
+      +, -, *, /, mod
+    - Precedence:
+      (+,-) < (*,/,div,mod) < (~)
+    - String concatination
+      ^
+      "hello " ^ "world"; => "hello world"
+    - Ordering comparisons
+      <, <=, >, >= 
+      Valid for int, real, string, char
+    - Equality testing
+      = Test equality (similar to == in C)
+      <> not equal (similar to != in C)
+      Cannot test equality on floats
+    - Boolean operators
+      * andalso (similar to and in C)
+      * orelse (similar to or in C)
+      * not
+      {orelse} < {andalso} < {=,<>,<,>,<=,>=} < {+,-,^} < {*,/,div,mod} < {~,not}
+
+Fri, Sep 30
+  If statement: similar to C ternary statement
+    if 1<2 then #"x" else #"y";
+    There is no if/then, just if/then/else
+  Functions: you apply a function to an argument in ML by putting the function name next to it, parentheses are optional.
+    floor 3.6
+    floor(3.6)
+    `f a b` is the same as `(f a) b`
+    square 2+1 ==> square(2) + 1 ==> 5
+    square (2+1) ==> 9
+  Assignment
+    val x = 1+2*3 ==> "val x = 7 : int"
+    val y = if x = 7 then 1.0 else 2.0
+
+Mon, Oct 3
+  You can define a new variable with the same name as an old one, even a different type
+  However, it doesn't reassign the variable, it creates a totally new variable. 
+  Any part of the program using the old variable still does. Anything using the new variable uses the new one
+
+  By typing just an expression, the results get assigned to a variable called 'it'
+
+  Tuple
+    - Use parentheses to form tuples
+    - Tuples can contain other tuples
+    - A tuple is like a record with no filed names
+    - To get the i'th element of a tuple x, use #i x
+
+  Type constructor *
+    - int * int * bool ==> (int, int, bool)
+    - (int * int) * bool ==> ((int, int), bool)
+
+  Lists
+    - Like Tuples, but must be homogeneous
+    - [1,2,3]  ==> int list
+    - [1,2.0,3] ==> Will throw error
+    - [[1, 2], [4, 5, 6]] ==> int list list
+
+  Nil
+    - Empty list [] is nil
+    - val it = [] ==> 'a list
+    - Variable beginning in 'a is an unknown type
+    - 'a list means list of unknown type
+  
+  Null test
+    - null x ==> tests if x is null
+    - You could also do x=[], but null x is preferred
+
+  List constructor
+    - int list ==> a list of ints
+
+  List operatrions
+    - @ ==> Concatenates a list
+      * [1,2,3]@[4,5,6] ==> [1,2,3,4,5,6]
+    - :: ==> list builder operator (pronounced cons)
+      * 1::[2,3,4] ==> pushes 1 to the beginning of a list
+      * Right associative
+    - hd 
+      * function gets head of list
+      * hd [1,2,3] ==> [1]
+    - tl
+      * gets tail of list (Everything but first element)
+      * tl [1,2,3] ==> [2,3]
+    - explode
+      * Takes string and returns list of characters
+    - implode
+      * Takes list of characters and returns string
+
+  Functions:
+    - defined using the fun keyword
+    - fun <function-name> <parameter> = <expression>;
+    - fun firstChar s = hd (explode s);
+    - All functions only take one parameter. If you need multiple values, you can pass a tuple;
+
+Wed, Oct 5
+  - fun quot (a,b) = a div b
+  - quot (6,2) ==> int 3
+  - val tup = (6,2); quot tup ==> int 3
+
+  Recursive functions!
+  - fun fact n = 
+    if n = 0 then 1
+    else n * fact(n-1);
+
+  - fun listsum x = 
+    if null x then 0
+    else hd x + listsum(tl x);
+
+  Type constructor precedence (first means higher precedence)
+    list (lists)
+    * (tuple)
+    -> (functions)
+
+  Function explicit types
+    fun prod(a,b) = a*b ==> int * int -> int
+    fun prod(a,b):real = a*b ==> real * real -> real
+
+Fri, Oct 7
+  A type is a set
+    * When you declare that a vaviable has a certain type, you are saying that the values the ariablle can have are elements of a certain set
+    * A type is a set of values
+      - plus a low level representation
+      - plus a collection of operations that can be applied to those values
+
+  Types
+    Primitive vs Constructive
+      any type that a program can use but cannot define for itself is a primitive type in the language
+      Any type that a program can define for itself using primitive types is a constructed type
+      - Some primitives in ML are int, real, char
+      - Some constructed in ML are list and *
+
+    Primitive Types
+      - Definition of a language says what primitive types are
+      - Languages define the primitive types more strictly than others
+        * Some define the primitive types exactly (Java)
+        * Others leave some wiggle room -- the primitive types may be different sets in different implementations of the language
+
+    Comparing Integral types
+      C:
+        char
+        unsigned char
+        short int
+        unsigned short int
+        int
+        unsigned int
+        long int
+        unsigned long int
+        - No standard sizes, but longer sizes must be bigger than shorter sizes
+      Java:
+        byte  (1-byte signed)
+        char  (2-byte signed)
+        short (2-byte signed)
+        int   (4-byte signed)
+        long  (8-byte signed)
+
+      Scheme
+        integer (unbounded)
+
+    Issues
+      What sets do the primitive types signify?
+        - How much is part of the language specification, how much left up to the implementation?
+        - If necessary, how can a program find out? (In C, INT_MAX. In ML, Int.maxInt)
+      what operations are supported
+        - Detailed definitions: rounding, exceptions, ect
+
+    Constructed Types
+      - Additional types defined using the language
+      - Today: enumerations, tuples, arrays, strings, lists, unions, subtypes, and function types
+      - For each one, there is connection between how sets are defined mathematically, and how types are defined in programming languages
+
+    Making sets by enumeration
+      - Many languages support enumerated types
+        C:     enum coin {penny, nickel, dime, quarter};
+        Ada:   type GENDER is (MALE, FEMAIL);
+        Pacal: type primaryColors = (red, green, blue)
+        ML:    datatype day = M | Tu | W | Th | F | Sa | Su
+
+      - These types define a new type
+      - They also define a collection of named constants of that type
+
+    Representing Enumeration Values
+      - A common representation is to treat the values of an enumeration as small integers
+      - This may even be exposed to the programmer, as it is in C
+      In C:
+        enum coin { penny = 1, nickel = 5, dime = 10, quarter = 25  };
