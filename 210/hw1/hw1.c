@@ -1,6 +1,15 @@
 // Alex McNurlin
 // HW1 
 // 10/14/16
+//
+//
+// This program works by stepping through each character in the file
+//   and checking if it is part of a keyword/number/comment (is_alpha, 
+//   is_number, is_char, ect). When the type of token is found for the 
+//   character, the character is passed to a function to find 
+//   the entire token (get_keyword, get_number, get_comment, ect) and print
+//   it to the screen
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +21,6 @@ int is_string(      char ch1);
 int is_char(        char ch1);
 int is_operator(    char ch1,char ch2);
 
-int mark_as_unknown(char  ch1,char  ch2, FILE *fp);
 int get_keyword(    char *ch1,char *ch2, FILE *fp);
 int get_operator(   char *ch1,char *ch2, FILE *fp);
 int get_char(       char *ch1,char *ch2, FILE *fp);
@@ -22,12 +30,14 @@ int get_string(     char *ch1,char *ch2, FILE *fp);
 
 
 int main(int argc, char *argv[]) {
+  // Checks for valid arguments
   if (argc != 2) {
     printf("Error: Invalid number of arguments\n");
     printf("Exiting...\n");
     exit(1);
   }
 
+  // Open the given filename
   FILE *fp;
   fp = fopen(argv[1], "r");
   if (fp == 0) {
@@ -38,10 +48,15 @@ int main(int argc, char *argv[]) {
 
   char ch1=1, ch2=getc(fp);
 
+  // Iterate over every character in the file until EOF
+  // ch1 is the character being looked at, while ch2 is the character after it
+  //   in the file
   while ((ch1 = ch2) && (ch2 = getc(fp)) != EOF) {
-    //printf("outside function: Testing ch1(%c) and ch2(%c)\n", ch1, ch2);
+    // Ignore whitespace
     if (ch1 == ' ' || ch1 == '\n' || ch1 == '\r' || ch1 == '\t') {
       continue;
+    // Check which token is started by ch1. Some tokens (operators and comments)
+    //   need 2 characters to identify, so ch2 is used as well
     } else if (is_alpha(ch1)) {
       get_keyword(&ch1,&ch2, fp);
     } else if (is_number(ch1)) {
@@ -54,21 +69,16 @@ int main(int argc, char *argv[]) {
       get_char(&ch1,&ch2,fp);
     } else if (is_operator(ch1,ch2)) {
       get_operator(&ch1,&ch2, fp);
-    } else {
-      mark_as_unknown(ch1,ch2, fp);
     }
 
   }
-  /* char temp_char[1]; */
-  /* do { */
-  /*   fscanf(fp, "%c1", temp_char); */
-  /*   printf("%s", temp_char); */
-  /* } while (temp_char != NULL); */
-  //strcpy(temp_char, "Hello World");
 
+  // Close file. We're done here
   fclose(fp);
 }
 
+// A function to check if the given character is part of a keyword/identifier
+//   All that is necessary for that is that it's alphabetic or an underscore
 int is_alpha(char ch1) {
   if ((ch1 >= 'a' && ch1 <= 'z') 
       || (ch1 >= 'A' && ch1 <= 'Z') 
@@ -88,6 +98,8 @@ int is_number(char ch1) {
   }
 }
 
+// A function to check if the given characters are part of a comment
+//   This is only true when ch1 is / and ch2 is *
 int is_comment(char ch1,char ch2) {
   if (ch1 == '/' && ch2 == '*') {
     return 1;
@@ -96,6 +108,8 @@ int is_comment(char ch1,char ch2) {
   }
 }
 
+// A function to check if the given characters are part of a string
+//   This is only true when ch1 is "
 int is_string(char ch1) {
   if (ch1 == '"') {
     return 1;
@@ -104,6 +118,8 @@ int is_string(char ch1) {
   }
 }
 
+// A function to check if the given characters are part of a character literal
+//   This is only true when ch1 is '
 int is_char(char ch1) {
   if (ch1 == '\'') {
     return 1;
@@ -112,9 +128,11 @@ int is_char(char ch1) {
   }
 }
 
+// A function to check if the given characters are part of an operator
 int is_operator(char ch1,char ch2) {
   switch (ch1) {
     case '.':
+    case ',':
     case '(':
     case ')':
     case '+':
@@ -141,27 +159,13 @@ int is_operator(char ch1,char ch2) {
   return 0;
 }
 
-int mark_as_unknown(char ch1,char ch2, FILE *fp) {
-}
-
+// A function that gets the word starting at ch1, then determines if it's an
+//   identifier or keyword
 int get_keyword(char *ch1,char *ch2, FILE *fp) {
   char the_string[256];
-  //char ch3, ch4;
-
-  //printf("%c%c (ch1 and ch2)\n", *ch1, *ch2);
-
-  /* ch3 = getc(fp); */
-  /* ch4 = getc(fp); */
-  /* fseek(fp, -2, SEEK_CUR); */
-  /* printf("%c%c (char beginning)\n", ch3, ch4); */
-
-  // Rewind the file to the character represented by ch1, so fscanf will read
+  // Rewind the file to the point in the file represented by ch1, so fscanf will read
   // from the correct spot
   fseek(fp, -2, SEEK_CUR);
-
-  //ch3 = getc(fp);
-  //fseek(fp, -1, SEEK_CUR);
-  //printf("%c (after seek)\n", ch3);
 
   fscanf(fp, "%[a-zA-Z_0-9]*", the_string);
 
@@ -169,16 +173,7 @@ int get_keyword(char *ch1,char *ch2, FILE *fp) {
   fseek(fp, -1, SEEK_CUR);
   *ch1 = getc(fp);
   *ch2 = getc(fp);
-  //fseek(fp, -1, SEEK_CUR);
-
-  //printf("%c%c (ch1, ch2 after scan)\n", *ch1, *ch2);
-
-  //printf("%s (string in question)\n", the_string);
-
-  /* ch3 = getc(fp); */
-  /* fseek(fp, -1, SEEK_CUR); */
-  /* printf("%c (after scan)\n", ch3); */
-
+  //
   // Compare the_string with the list of keywords
   char* keywords[] = { "accessor", "and", "array", "begin", "bool", "case", 
                         "else", "elsif", "end", "exit", "function", "if", "in", 
@@ -200,6 +195,7 @@ int get_keyword(char *ch1,char *ch2, FILE *fp) {
   return 0;
 }
 
+// A function that gets the word starting at ch1, then determines if it's an
 int get_operator(char *ch1,char *ch2, FILE *fp) {
   // Arrays containing the operators separated by length
   char* operators_length_2[] = {":=", "..", "<<", ">>", "<>", "<=", ">=", "**", "!=", "=>"};
@@ -233,8 +229,7 @@ int get_char(char *ch1, char*ch2, FILE *fp) {
   fseek(fp, -1, SEEK_CUR);
   *ch1 = getc(fp);
   *ch2 = getc(fp);
-  //printf("ch1: %c, ch2: %c\n", *ch1, *ch2);
-  printf("%s (character literal)\n", the_char);
+  printf("%s (char literal)\n", the_char);
 
   return 0;
 }
@@ -242,15 +237,15 @@ int get_char(char *ch1, char*ch2, FILE *fp) {
 int get_number(char *ch1,char *ch2, FILE *fp) {
   char number[256];
   fseek(fp, -2, SEEK_CUR);
-  fscanf(fp, "%255[0-9a-fA-f._#]", number);
-  printf("%s (number)\n", number);
+  fscanf(fp, "%255[0-9a-fA-F._#]", number);
+  printf("%s (numeric literal)\n", number);
   *ch1 = *ch2;
   *ch2 = getc(fp);
 }
 
 int get_comment(char *ch1,char *ch2, FILE *fp) {
   // Wonderful mess of parenthesis and logic
-  // continuously print out characters until '*/' is reched
+  // continuously print out characters until '*/' is reached
   while (!(*ch1 == '*' && *ch2 == '/')) {
     printf("%c", *ch1);
     *ch1 = *ch2;
@@ -267,7 +262,9 @@ int get_string(char *ch1,char *ch2, FILE *fp) {
   char the_string[256];
   fseek(fp, -2, SEEK_CUR);
   fscanf(fp, "\"%[^\"]*\"", the_string);
-  fseek(fp, 2, SEEK_CUR);
+
+  *ch1 = getc(fp);
+  *ch2 = getc(fp);
 
   printf("\"%s\" (string)\n", the_string);
   return 0;
