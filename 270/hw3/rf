@@ -21,6 +21,7 @@ function main {
   if [ -e "$dir/$file" ]; then
     # Do nothing if files are equal
     if cmp -s "$dir/$file" "$file" 2>/dev/null; then
+      mv "$file $dir/$file"
     # If they're not equal
     else
       # Find a suffix that you can add to the file so nothing is overwritten
