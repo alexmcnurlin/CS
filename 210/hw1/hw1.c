@@ -173,7 +173,7 @@ int get_keyword(char *ch1,char *ch2, FILE *fp) {
   fseek(fp, -1, SEEK_CUR);
   *ch1 = getc(fp);
   *ch2 = getc(fp);
-  //
+
   // Compare the_string with the list of keywords
   char* keywords[] = { "accessor", "and", "array", "begin", "bool", "case", 
                         "else", "elsif", "end", "exit", "function", "if", "in", 
@@ -195,7 +195,7 @@ int get_keyword(char *ch1,char *ch2, FILE *fp) {
   return 0;
 }
 
-// A function that gets the word starting at ch1, then determines if it's an
+// A function that gets the operator beginning at ch1
 int get_operator(char *ch1,char *ch2, FILE *fp) {
   // Arrays containing the operators separated by length
   char* operators_length_2[] = {":=", "..", "<<", ">>", "<>", "<=", ">=", "**", "!=", "=>"};
@@ -222,27 +222,36 @@ int get_operator(char *ch1,char *ch2, FILE *fp) {
   }
 }
 
+// A function that gets the character literal at ch1, inluding the single quotes
 int get_char(char *ch1, char*ch2, FILE *fp) {
+  // Move file pointer to where ch1 was
   fseek(fp, -2, SEEK_CUR);
   char the_char[3];
   fscanf(fp, "%3s", the_char);
   fseek(fp, -1, SEEK_CUR);
+
+  printf("%s (char literal)\n", the_char);
+  // Update ch1, ch2, and the file pointer to be in the correct location
   *ch1 = getc(fp);
   *ch2 = getc(fp);
-  printf("%s (char literal)\n", the_char);
-
   return 0;
 }
 
 int get_number(char *ch1,char *ch2, FILE *fp) {
   char number[256];
+  // Move file pointer to where ch1 was
   fseek(fp, -2, SEEK_CUR);
+  // Read in valid number characters!
   fscanf(fp, "%255[0-9a-fA-F._#]", number);
+
   printf("%s (numeric literal)\n", number);
+  // Update ch1, ch2, and the file pointer to be in the correct location
   *ch1 = *ch2;
   *ch2 = getc(fp);
+  return 0;
 }
 
+// A function that gets the comment beginning at 
 int get_comment(char *ch1,char *ch2, FILE *fp) {
   // Wonderful mess of parenthesis and logic
   // continuously print out characters until '*/' is reached
@@ -251,21 +260,25 @@ int get_comment(char *ch1,char *ch2, FILE *fp) {
     *ch1 = *ch2;
     *ch2 = getc(fp);
   }
-  // Print the final characters of the comment and update ch1, ch2, and the file
-  // pointer to be where we want
+
   printf("*/ (comment)\n");
+  // Update ch1, ch2, and the file pointer to be in the correct location
   *ch1 = *ch2;
   *ch2 = getc(fp);
+  return 0;
 }
 
+// A function that gets the string literal at ch1, including the double quotes
 int get_string(char *ch1,char *ch2, FILE *fp) {
   char the_string[256];
+  // Move file pointer to where ch1 was
   fseek(fp, -2, SEEK_CUR);
+  // Find all the text between double quotes and store it in the_string
   fscanf(fp, "\"%[^\"]*\"", the_string);
 
+  printf("\"%s\" (string)\n", the_string);
+  // Update ch1, ch2, and the file pointer to be in the correct location
   *ch1 = getc(fp);
   *ch2 = getc(fp);
-
-  printf("\"%s\" (string)\n", the_string);
   return 0;
 }
