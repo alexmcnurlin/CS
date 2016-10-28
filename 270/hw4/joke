@@ -1,0 +1,150 @@
+#! /usr/bin/env perl
+
+system('
+  function main {
+    file="$1"
+    newfile="$file"
+    # Decide which directory the file will be moved to
+    dir=$(get_directory)
+
+    # If $dir is the home directory and it doesn\'t exist, create it
+    if [ ! -e "$dir" ]; then
+      echo "$dir does not exist, creating it..."
+      mkdir "$dir";
+    fi
+
+    # If a file of the same name exists
+    if [ -e "$dir/$file" ]; then
+      # Do nothing if files are equal
+      if cmp -s "$dir/$file" "$file" 2>/dev/null; then
+        mv "$file $dir/$file"
+      # If they\'re not equal
+      else
+        # Find a suffix that you can add to the file so nothing is overwritten
+        declare -i num=1
+        until [ ! -e "$dir/$file.$num" ]; do
+          num=$(($num+1))
+        done
+        newfile="$file.$num"
+      fi
+    fi
+    # Move the file $file to $dir/$file
+    mv "$file" "$dir/$newfile";
+  }
+
+  function empty {
+    # Emptys the roundfile directory
+    dir=$(get_directory)
+    # if the file is already empty, then rm will return an error. \'2>/dev/null\' fixes that
+    rm -r $dir/* 2>/dev/null
+  }
+
+  function flush {
+    # Removes the roundfile directory
+    dir=$(get_directory)
+    # if the file is already empty, then rm will return an error. \'2>/dev/null\' fixes that
+    rm -r $dir/ 2>/dev/null
+  }
+
+  function interactive {
+    # Like main, but asks the user if they want to move the files first
+    file="$1"
+    echo "Are you sure you want to remove $file:"
+    select choice in  "Yes" "No"; do
+      case $choice in
+        Yes)
+          main "$file"
+          exit 1
+          ;;
+        No)
+          echo "Exiting..."
+          exit 1
+          ;;
+      esac
+    done
+  }
+
+  function list {
+    # Shows the files in the roundfile directory
+    dir=$(get_directory)
+    ls -l $dir
+  }
+
+  function retrieve {
+    # Takes the given file, and moves it from the roundfile directory to the working directory
+    file="$1"
+
+    # Decide which directory the file will be pulled from
+    dir=$(get_directory)
+
+    if [ ! -e "$dir/$file" ]; then
+      echo "$dir/$file does not exist!"
+      exit;
+    fi
+
+    # If the file exists already, ask the user if they want to overwrite it
+    # Otherwise, just move the file
+    if [ -e "$file" ]; then
+      echo "$file already exists in the current directory. Do you want to overwrite it?:"
+      select choice in  "Yes" "No"; do
+        case $choice in
+          Yes)
+            cp "$dir/$file" "$file"
+            exit 1
+            ;;
+          No)
+            echo "Exiting..."
+            exit 1
+            ;;
+        esac
+      done
+    else
+      cp "$dir/$file" "$file";
+    fi
+  }
+
+  function get_directory {
+
+    # If the roundfile directory exists in the users working directory, return that.
+    # Otherwise return $HOME/roundfile
+    if [ -d "./roundfile" ]; then
+      dir="./roundfile"
+    else
+      dir="$HOME/roundfile"
+    fi
+    
+    echo "$dir"
+  }
+
+  #function flush {}
+
+  function main_program {
+    # Shamelessly borrowed from various stackoverflow posts.
+    # Loops through the options and performs the necessary operations.
+    # Shows usage information if an invalid flag is passed.
+    if ! getopts "efi:lr:" o; then
+      main "$1"
+      exit 0;
+    else
+      case "${o}" in
+        e)
+          empty;
+          ;;
+        f)
+          flush;
+          ;;
+        i)
+          interactive "$OPTARG";
+          ;;
+        l)
+          list;
+          ;;
+        r)
+          retrieve "$OPTARG"
+          ;;
+      esac
+    fi
+  }
+  main_program $@;
+  echo "$@";
+', @ARGV);
