@@ -162,7 +162,7 @@ Fri, Sep 23
     JVM language is sometimes called bytecode
     Bytecode interpeter is part of almost every webbrowser
     When you browse a ge that contains a Java applet, the browser runs the applet by interpreting its bytecode
-  Types if intepreters
+  Types of intepreters
     Pure interpreter
       Intermediate language = high-level language
     Tokenizing interpreter
@@ -413,7 +413,7 @@ Wed, Oct 5
 
 Fri, Oct 7
   A type is a set
-    * When you declare that a vaviable has a certain type, you are saying that the values the ariablle can have are elements of a certain set
+    * When you declare that a vaviable has a certain type, you are saying that the values the variablle can have are elements of a certain set
     * A type is a set of values
       - plus a low level representation
       - plus a collection of operations that can be applied to those values
@@ -526,3 +526,211 @@ Mon, Oct 10
         * Various index types are possible: inegers, characters, enumerations, subranges
         * Starting index chosen by the programmer
         * Ending index too: Size is fixed at compile time
+
+Fri, Oct 21
+  Making types by union
+  In C: union element {
+          int i;
+          float f;
+        }
+
+  In ML:  datatype element {
+            I of int |
+            F of real;
+          }
+  Representing union values
+    You can have 2 representations overlap each other in memrory
+    union element {
+      int i;
+      char *p;
+    } u; /*sizeof(u) == max(sizeof(u.i), sizeof(u.p)) */
+
+  Strictly typed unions
+    With ML, all you can do with a union is extract the contents
+    dataype element = I of int | F of real;
+    fun getReal (F x) = x | getReal (I x) = real x;
+  Loosely typed unions
+    Some languages expose the details of union implementation
+    union element {
+      int i;
+      float f;
+    };
+
+    union element e;
+    e.i = 100;
+    float x = e.f;
+
+  A middle way: Variant records
+    Union where specific type is linked to the value of a field
+    A variety of languages including Ada and Modula-2 use this
+
+  Making Subtypes
+    A subtype is a type that is a subset of another type
+    type digit = 0..9; // Pascal
+    subtype DIGIT is INTEGER range 0..9; // Ada
+
+  Representing Subtype Values
+    Usually we just use the same representation for the subtype as for the supertype
+
+  Operations on Subtype values
+    Usually supports all operators on the supertype, and perhaps additional operations not allowed on the supertyp
+
+  Classes
+    Classes are a key idea of object oriented programming
+    A class can be a type, data and operations on that data, bundled together
+    subclass is a subtype: it includes a subset of the objects, but supports a superset of the operations
+
+  Functions
+    Most languages have some notion of the type of a function
+  Operations on function values
+    We need to call functions
+    Many languages support nothing beyond function call
+
+Mon, Oct 24
+  Classes
+    - The key idea of object-oriented programming
+    - Class-based object oriented languages, a class can be a type: data and operations on that data, bundled together
+    - A subclass is a subtype: it includes a subset of the objects, but supports a superset of the operations
+
+  Type annotations
+    Many language require type annotations on variables, functions, ect
+    The programmer uses them to supply static type information to the language system
+    They are also a form of documentation, and make programs easier for people to read
+
+  Intrinsic Types
+    Some languages use naming conventions to declare the types of variables
+    These supply static type information to the language system and the human reader
+  
+  Extreme Type inference
+    ML Infers a static type for every expression and for every function
+    doesn't require annotations
+  
+  Type inferencing
+    Most languages require some simpple kinds of type inference
+    Constants usually have static types
+      Java: 10 is type int, 10L is type long
+  
+  Static Type checking
+    Static type checking determines a type for everything before running the program: variables, functions, expressions, everything
+    Compile-time error messages when static types are not sonsistent
+      Operations: 1+"abc"
+      functions: round("abc")
+      statements: if "abc" then ...
+
+  Dynamic typing
+    Programs are not statically type-checked before being run
+    At runtime, the language system checks that operands are of suitable types for operators
+
+  Example: Lisp
+    function to add 2 numbers
+      (defun f (a b) (+ a b))
+      * Doesn't work if a or b is not a number
+      * an improper call, like (f nil nil) is not caught at compile time
+      * it's caught at runtime -- dynamic typing
+
+  Dynamic Typing (cont)
+    Although dynamic typing does not type everything at compile time, it still uses types
+    In a way, it uses them even more than static typing
+    It needs to have types to check at runtime
+    So the language system must store type information with values in memory
+
+  Staic vs Dynamic
+    Not black and white
+    Static typed languages often use some dynamic typing
+      - Subtypes can cause this
+      - Everything is typed at compile time, but compile-time type may have sutypes
+    Dynamically typed languages often use some static typing
+      - Static types can be inferred for parts of Lisp programs, using constant types and declarations
+      - Lisp compilers can use static type information to generate better code, eliminating runtime type checks
+
+  Explicit type tests
+    - Some languages allow explicit runtime type tests
+      Java: instanceof operator
+      Modula-3: branch on object type with typecase statement
+    - Requires type information to be present at runtime, even when the language is mostly statically typed
+
+  Strong vs Weak Typing
+    - Type checking is to prevent the application of operations ot incorrect types of operands
+    - In some languages (Java), type checking can be thorough enough to guarantee this, aka *strong typing*
+    - In some languages (C), type checking can have holes to avoid a guaruntee. *weak typing*
+
+  Type equivalence
+    - When are two types the same?
+    - A language might permit a:=b if a and b are the same types
+    - Name equivalence: Types are the same if and only if they have the same name
+    - Structural equivalence: types are the same if and only if they are buildt from the same primitive types using the same type constructors in the same order
+    - Not the only 2 ways to decide equivalence
+    - Languages often uses odd variations or combinations
+
+Wed, Oct 26
+  Patterns
+    ML functions take a single parameter
+      fun f n = n*n
+    You can specify multiple inputs with a tuple
+      fun f (a,b) = a*b;
+    Both n and (a,b) are patterns. The n matches and binds to any argument, while (a,b) matches any 2-tuple and binds a and b to its componenets
+    
+    Underscore as a pattern
+      fun f _ = "yes";
+      matches anything, but does not bind it to a variable
+      Useful when you don't want to pass an argument to a function
+    Constants as a pattern
+      fun f 0 = "yes";
+      run as 'f 0 ==> "yes"'
+      This means that f is defined using a pattern that didn't cover all the domain type (int)
+    Lists of patterns
+      fun f [a,_] = a;
+      f [#'g', #'f'] ==> #'g'
+    Cons of patterns as a pattern
+      You can use a cons of patterns as a pattern
+      x::xs matches any non-empty list, and binds x to the head and xs to the tail
+    ML patterns so far
+      A variable is a pattern that matches anything, and binds to it
+      _ is a pattern that matches anything, but doesn't bind anything
+      A constant of an equality type is a pattern that matches only that constant
+      A tuple of patterns is a pattern that matches any tuple of the right size, whose contents match the sub-patterns
+      A list of patterns is a pattern that matches any list of the right size, whose contents match the sub-patterns
+      A cons (::) of patterns is a pattern that matches any non-empty list whose head and tail match the sub-patterns
+    Multiple patterns for functions
+      fun f 0 = "zero" | f 1 = "one";
+    Overlapping patterns
+      fun f 0 = "zero" | f _ = "non-zero";
+      patterns may overlap
+      ML uses first match for a given argument
+    Pattern matching style
+      fun f 0 = "zero" | f _ = "non-zero";
+      fun f n = if 0 then "zero" else "non-zero";
+      These are the same, but the pattern matching is generally preferred
+    Restriction
+      You cannot use the same name in a pattern
+
+Fri, Oct 28
+  the polyEqual warning
+    fun eq (a,b) = if a=b then 1 else 0;
+    warning for an equality comparison, when the runtime type cannot be resolved
+    OK to ignore: this kind of equality test is inefficient, but can't always be avoided
+  Patterns
+    val (a,b) = (1,2.3); // a = 1, b = 2.3
+    val a::b = [1,2,3,4,5]; // a = 1, b = [2,3,4,5]
+  Local Variable definitions
+    When you use val at the top level to define a variable, it is visible from that point forward
+    There is a way to restrict the scope of definitions: the let expression
+    <let-exp) ::= let <definitions> in <expression> end;
+    The value of a let expression is the value of the expression in the in part
+    Variables defined with val between the let and the in are visible only from the point of declaration up to the end
+  Proper indentation for let
+    let
+      val x = 1
+      val y = 2
+    in
+      x+y
+    end
+  Moar code examples (let)
+    fun halve nil = (nil, nil) 
+    |   halve [a] = ([a], nil)
+    |   halve (a::b::cs) =
+          let
+            val (x,y) = halve cs
+          in
+            (a::x, b::y)
+          end;
