@@ -1,0 +1,105 @@
+%{
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "sym.h"
+%}
+
+%union {
+    double dval;
+    struct sym * symptr;
+    struct constant * constptr;
+}
+
+%token <symptr> NAME
+%token <symptr> CONST
+%token <dval> NUMBER
+%left '-' '+'
+%left '*' '/'
+%nonassoc UMINUS
+
+%type <dval> expression
+%type <dval> var
+%%
+statement_list
+    : statement '\n'
+    | statement_list statement '\n'
+    ;
+
+statement
+    : NAME '=' expression { $1->value = $3; }
+    | expression { printf("= %g\n", $1); }
+    ;
+
+var
+    : CONST { $$ = $1->value; }
+    | NAME { $$ = $1->value; }
+    ;
+
+expression
+    : expression '+' expression { $$ = $1 + $3; }
+    | expression '-' expression { $$ = $1 - $3; }
+    | expression '*' expression { $$ = $1 * $3; }
+    | expression '/' expression { if ($3!=0) $$ = $1 / $3; else printf("divide by zero\n"); }
+    | '-' expression %prec UMINUS { $$ = -$2; }
+    | '(' expression ')' { $$ = $2; }
+    | NUMBER
+    | var 
+    ;
+
+%%
+
+struct sym * sym_lookup(char * s)
+{
+    char * p;
+    struct sym *sp;
+
+    sp = sym_tbl;
+    do
+    {
+        if (sp->name && strcmp(sp->name, s) == 0)
+            return sp;
+
+        if (sp->name)
+            continue;
+
+        sp->name = strdup(s);
+        sp->next = malloc(sizeof(struct sym));
+        return sp; 
+    } while (sp = sp->next);
+   
+    yyerror("Too many symbols");
+    exit(-1);
+    return NULL; /* unreachable */
+}
+
+
+struct constant * const_lookup(char * s)
+{
+    char * p;
+    struct constant *sp;
+
+    sp = const_tbl;
+    do
+    {
+        if (sp->name && strcmp(sp->name, s) == 0)
+            return sp;
+
+        if (sp->name)
+            continue;
+
+        sp->name = strdup(s);
+        sp->next = malloc(sizeof(struct constant));
+        return sp; 
+    } while (sp = sp->next);
+   
+    yyerror("Too many symbols");
+    exit(-1);
+    return NULL; /* unreachable */
+}
+
+int main() {
+    const_lookup("PI")->value = 3.14159;
+    const_lookup("PHI")->value = 1.61803;
+    return yyparse();
+}

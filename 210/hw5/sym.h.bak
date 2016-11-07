@@ -1,0 +1,21 @@
+#ifndef SYMTBL_H
+#define SYMTBL_H
+
+struct sym {
+    char * name;
+    double value;
+    struct sym *next;
+} sym_tbl[1] ;
+
+
+struct constant {
+    char * name;
+    double value;
+    struct constant *next;
+} const_tbl[1] ;
+
+
+struct sym * sym_lookup(char *);
+struct constant * const_lookup(char *);
+
+#endif /* SYMTBL_H */
