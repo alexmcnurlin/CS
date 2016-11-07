@@ -7,6 +7,8 @@ use File::Path;
 
 sub main {
     my $file = shift(@_);
+    -e $file or die("Error: \"$file\" does not exist");
+
     my $dir = get_round_dir(); # Finds the directory to move files to
 
     # Checks for files of the same name, and renames the file accordingly
@@ -19,15 +21,29 @@ sub main {
             $suffix++;
         }
         $newfile = "$newfile.$suffix";
+    } elsif (!compare("$file", "$dir/$file")) {
+        print("\"$file\" already exists in roundfile. Would you like to overwrite it? [y/n]: ");
+        my $u = uc(<STDIN>);
+        chomp($u);
+        if ($u eq "Y" || $u eq "YES") {
+            # pass
+        } elsif ($u eq "N" || $u eq "NO") {
+            print("Didn't remove \"$file\"\n");
+            return(1);
+        } else {
+            main("$file");
+            return(1);
+        }
     }
 
-    system("mv \"$file\" \"$dir/$newfile\"");
+    move("$file", "$dir/$newfile");
 }
 
 sub empty {
     my $dir = get_round_dir();
     if ( -e $dir ) {
         unlink(glob("$dir/*"));
+        rmtree(glob("$dir/*/"));
     }
 }
 
@@ -43,13 +59,16 @@ sub flush {
 #   if yes, runs main($file). If anything else, do nothing
 sub interactive {
     my $file = shift(@_);
-    print("Are you sure you want to remove \"$file\": ");
+    print("Are you sure you want to remove \"$file\"? [y/n]: ");
     my $u = uc(<STDIN>);
     chomp($u);
     if ($u eq "Y" || $u eq "YES") {
         main("$file");
-    } else {
+    } elsif ($u eq "N" || $u eq "NO") {
         print("Didn't remove \"$file\"\n");
+    } else {
+        interactive("$file");
+        return(1);
     }
 }
 
@@ -61,7 +80,27 @@ sub list {
 
 sub retrieve {
     my $file = shift(@_);
-    print("Retrieve: $file\n");
+
+    my $dir = get_round_dir();
+
+    # Check  if the file exists with the roundfile directory
+    -e "$dir/$file" or die("$dir/$file does not exist!");
+
+    if (-e "$file") {
+        print("$file already exists in the current directory. Do you want to overwrite it? [y/n]: ");
+        my $u = uc(<STDIN>);
+        chomp($u);
+        if ($u eq "N" || $u eq "NO") {
+            print("Didn't retrieve \"$file\"\n");
+            return(1);
+        } elsif ($u eq "Y" || $u eq "YES") {
+            #pass
+        } else {
+            retrieve($file)
+        }
+    }
+
+    copy("$dir/$file", "$file");
 }
 
 # Returns the path to the roundfile directory. if 'roundfile' exists in the 
@@ -76,36 +115,11 @@ sub get_round_dir {
     }
 
     if (! -e "$dir") {
-      mkdir("$dir") or die("Unable to make directory $$ENV{'HOME'}/roundfile");
-      print("$dir does not exists. Creating it...\n");
+      mkdir("$dir") or die("Unable to make directory $$ENV{'HOME'}/roundfile\n");
+      print("$dir does not exist. Creating it...\n");
     }
 
     return("$dir");
-}
-
-sub diff {
-    my $file1 = shift(@_);
-    my $file2 = shift(@_);
-    my $res = system("diff \"$file1\" \"$file2\" &>/dev/null");
-    print("$res is $? for $file1 and $file2\n");
-    if ($res >= 2) {
-        # if diff returned with an error
-        return 0;
-    } else {
-        return($res);
-    }
-}
-
-# Tests if the argument at the given index exists 
-#   and is not an option (i.e. doesn't begin with '-')
-sub is_arg {
-    my $k = shift(@_);
-    my @arg = split(//,$ARGV[$k]);
-    if ($ARGV[$k] && $arg[0] ne "-") {
-        return 1;
-    } else {
-        return 0;
-    }
 }
 
 #for my $arg (@ARGV) {
@@ -127,23 +141,25 @@ for (my $i=0; $i<scalar(@ARGV); $i++) {
             } elsif ($opts[$j] eq "i") {
                 # Run the interactive function if it is the last option in the group
                 #   and the next arg exists
-                if ($j+1 == scalar(@opts) && is_arg($i+1)) {
+                if ($j+1 == scalar(@opts) && $ARGV[$i+1] && substr($ARGV[$i+1],0,1) ne "-") {
                     interactive($ARGV[$i+1]);
                     $i++;
                 } else {
-                    die("Error: Option 'i' requires additional argument...");
+                    die("Error: Option 'i' requires additional argument...\n");
                 }
             } elsif ($opts[$j] eq "l") {
                 list();
             } elsif ($opts[$j] eq "r") {
                 # Run the retrieve function if it is the last option in the group
                 #   and the next arg exists
-                if ($j+1 == scalar(@opts) && is_arg($i+1)) {
+                if ($j+1 == scalar(@opts) && $ARGV[$i+1] && substr($ARGV[$i+1],0,1) ne "-") {
                     retrieve($ARGV[$i+1]);
                     $i++;
                 } else {
-                    die("Error: Option 'r' requires additional argument...$ARGV[$i+1]");
+                    die("Error: Option 'r' requires additional argument...$ARGV[$i+1]\n");
                 }
+            } else {
+                print("Error: Option '$opts[$j]' is not a valid option\n");
             }
         }
 
