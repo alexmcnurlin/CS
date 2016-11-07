@@ -21,6 +21,7 @@ Mon, Aug 22
 Wed, Aug 24
   Process: Program in execution
 
+
 Wed, Aug 31
   Function Declaration: Code that states a function or variable exists (Like a prototype!)
   Function Definition: The actual definition of the code (The function body)
@@ -35,6 +36,7 @@ Fri, Sep 2
     Section headers:
       .data: Global initialized data
       .bss: Global uninitialized data
+
 
 Fri, Sep 9
   elf - Linux only
@@ -70,6 +72,7 @@ Fri, Sep 9
     vim
     wc
 
+
 Wed, Sep 14
   Contiguous
     * Simple and efficient, but
@@ -102,6 +105,7 @@ Fri, Sep 16
   Initialization
     Variable is actually assigned a value
     int i = 2;
+
 
 Mon, Sep 19
   Pointers, again!
@@ -144,6 +148,7 @@ Wed, Sep 21
     - Some remove variables, some add variables. Move code. Add code
     - All make the connection between source code an object code more complicated
     - A simple question, such as "What assembly language code was generated for this statement?" may have a complicated answer.
+
 
 Mon, Oct 3
   Shell commands
@@ -276,3 +281,269 @@ Fri, Oct 7
         * Preceded by $
         * $name
         * $age = 26;
+      - Arrays
+        * preceded by @
+        * @some_array
+
+      - Hashes (Associative arrays)
+        * Preceded by %
+
+
+Fri, Oct 14
+  Scalars:
+    No 'type' in the usual sence
+    $a = "123"
+    $b = "456"
+    $c = $a + $b; # 579
+  
+  Arrays
+    @a1 = (1); # Array of 1 element
+    @a2 = (1,2,3,4,5);
+    @a3 = (1..10); # 10 elements
+    print @a1," ",@a2," ",@a3, "\n";
+    print @a1[0]," ",@a2," ",@a3, "\n";
+
+  Hashes
+    %fruit = ('apples', 3, 'oranges', 6);
+    print $fruit{'apples'};
+
+  Funtions:
+    parentheses are optional
+    keys(hash): Returns array containing the keys in the given hash
+    values(hash): Returns array containing the values in the given hash
+
+
+Mon, Oct 17
+  Control Statements
+  if (condition) {
+    #code
+  } elsif (condition) {
+    #code
+  } else {
+    #code
+  }
+
+  unless (condition) {
+  if (!condition) {
+
+  Conditional stuff
+  number string
+  ==     eq
+  !=     ne
+  <      lt
+  >      gt
+  <=     le
+  >=     ge
+  
+  while (condition) {
+  until (condition) {
+  for($i=0; $i<$max; $i++) {
+  foreach $i (0..$max) {
+    $_ refers to the value of a foreach loop
+
+
+  Built in Variables
+    $_  Default input/pattern-search
+    $0  Program name
+    $1, $2...  Arguments
+    $.  input ine number
+    $$ process id
+    $! Error number returned from last subroutine call
+    @ARGV Array of command line arguments
+    %ENV Hash containing current environment
+
+
+  Moar operators!!!!!!
+    Assoc Operator            
+    l     ->            Method call, dereference
+          ++ --         Increment/decrement
+    r     **            Exponentiation
+    r     ! - \ + ~     Unary operators
+    l     =~ !~         Matches/doesn't match
+    l     * / % x       Matches, doesn't mmatch
+    l     + - .         Add, Subtract, String concat
+    l     << >>         Left/right bit shift, file test
+          < > <= >= lt gt le ge == != <=> eq ne cmp  Comparisons
+    l     &             bit and
+    l     | ^           bit or/xor
+    l     &&            Logical and
+    l     ||            Logical or
+          .. ...        Range
+    r     ?:            Ternary operator
+    r     = op=         Assignment
+    l     , =>          Comma, arrow list operators
+    r     not           Logical not
+    l     and           Logical and
+    l     or            Logical or
+
+Wed, Oct 19
+  Reading from stdin
+    @line = <stdin> # Opens the entire file as an array
+    foreach $i (@line) {$i}
+    while ($line = <stdin>) {$line}
+    while (<stdin>) {$_}
+  Opening file
+    $infile = "input.txt"
+    open(infile)
+    * Don't use $ for file descriptor(?)
+    open(OUTFILE, ">", "out.txt"); # create out.txt
+    open(OUTFILE, ">>", "out.txt"); # create out.txt
+  Strings
+    Concat: $filename = $base . ".bat"
+    Contains or Matches: if($a =~ /foo/) {} #/regex/
+    Substitution: $a =~ s/foo/bar/
+  Subroutines:
+  sub max {
+    @_[0]; #refers to the argument list:w
+
+  }
+
+
+Mon, Oct 24
+  Netwroking
+    Serial connection: in series
+      Didn't need a modem (modulator/demodulator)
+      56k modem = 56000 characters per second
+    Ethernet connection: Multiple computer connected via a network and ethernet cards
+      1 mb/sec
+      Connectors: AUI, 
+      Protocols: Token Ring, CSMA
+
+  x-term
+  MAC address; Unique address for each device
+  Router: Allows you to connect multiple ethernet cables to a single network. The router routes traffic through each cable to avoid sending traffic to everything on a network
+  Gateway: Connect multiple LANs together. UuUuU
+
+Wed, Oct 26
+  OSI Network Model
+    7 Application
+      * How does the program present itself to the end user
+    6 Presentation
+      * Interface to the user (computer/program)
+    5 Session
+      * How is the device going to use this information
+      * TCP (Transmission Control Protocol) port
+    4 Transport
+      * IP (Internet Protocol)
+    3 Network
+      * How do we address this/make a network
+      * Ethernet (MAC Address)
+    2 Data Link
+      * How the data is used
+      * Packet size/header format
+    1 Physical
+      * Determines things like connectors and the voltage to represent 0 and 1
+
+  IP over different networks
+    Computer 1
+    TCT/IP data
+    TCP packet      (TCP header | data)
+    IP Packet       (IP  header | TCP Packet)
+    Ethernet Packet (Eth header | IP Packet)
+    Ethernet LAN
+    Ethernet Packet to router running IP
+    Token Ring Packet
+    Token Ring LAN
+    TR Packet       (TR  header | IP Packet)
+    IP Packet       (IP  header | TCP Packet)
+    TCP packet      (TCP header | data)
+    Computer 2
+
+  Ethernet Packet
+    Ethernet Destination Addr (1st 32 bits)
+    Dest (last 16 bits)
+    Source (1st 16 bits)
+    Ethernet Source Addr (last 32 bits)
+    Data
+    Checksum
+
+Fri, Oct 28
+  IP Packet Format
+    Version
+    Header Length
+    Type of Service
+    Packet Length
+    Identification
+    Flags
+    Time to Live
+    Protocol
+    Checksum
+    Source Address
+    Destination Address
+    Data
+  TCP Packet Format
+    Source Port
+    Destination Port
+    Squence number
+    Acknowledgement Number
+    Header Length
+    Flags
+    Checksum
+    Data
+
+  Internet Protocol suite
+    TCP Reliable 
+      HTTP
+      SMTP
+      FTP
+      TELNET
+    UDP Unreliable
+      DNS
+      SNMP
+      VoIP
+
+
+Mon, Oct 31
+  Two way handshake protocol
+    * User sends packet, server acknowledges reply
+  Three way handshake protocol
+    * User sends TCP segment with sYN (Sequence Number) = 0 and Sequencce field = x
+    * Server sends TcP segment with sYN = 1, acknowledgment field = x+1 and sequence field y
+    * User sends TCP segment with acknowledgment field = y+1
+  TCP Disconnect protocol
+    * When ready to close, send TCP segment with FIN=1, segment=x
+    * Server responds with acknowledge y+y
+    * Server sends close request with FIN=1, sequence with y, and acknowledge = x+1
+    * User send TCP segment with acknowledgment y+1
+  DNS
+    * 
+
+Wed, Nov 2
+  biz   busiess
+  com   commercial
+  edu   educational
+  gov   governmental
+  info  unrestricted
+  mil   millitary
+  net   network service provider
+  org   non-profit organization
+  XX    two letter country code
+
+  Network Addresses
+    32 bit address: Network Address + Host Address (size per each can vary)
+    Ex
+      Host Address      192.168.110.23
+      Network Mask      225.225.225.0 // states how much of address is network addres, and how much is host address
+                    //  ^^^^^^^^^^^ Top 24 bits are 1, the last 8 is host address
+      Network Portion   192.160. 10.0
+      Host portion        0.  0.  0.23
+    
+    Net Class   Network Mask    Network Address Range
+    Class a     255.0.0.0       0.0.0.0   - 127.255.255.255
+    Class b     255.255.0.0     128.0.0.0 - 191.255.255.255
+    Class c     255.255.255.0   192.0.0.0 - 223.255.255.255
+
+    UI Subnet
+      Host Address    192.101.153.33
+      Network Mask    255.255.255.192
+      Network Portion 192.101.153
+      Host Portion               .33
+
+Fri, Nov 4
+  NFS: Network file system (Primarily Windows)
+  SMB: Samba (Primarily Unix)
+
+  More commands:
+    ar: Creates an archive, usually a library
+      - creates a .a file
+      - Can be used with gcc to only bring in necessary subroutines, rather than the whole object file
