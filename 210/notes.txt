@@ -46,6 +46,7 @@ Fri, Aug 26
     Postscript is similar
     Could be called imperative, but has little in common with most imperative languages
 
+
 Mon, Aug 29
   Fighting the Language
     - Languages always favor a particular style, but do not force the programmer to follow it
@@ -96,6 +97,7 @@ Wed, Aug 31
     The Productions are the tree building rules
     Each one has a left side, the separator ::= and a right side
     - The right hand side can be a sequ
+
 
 Mon, Sep 12
   Operator Terminology
@@ -213,6 +215,7 @@ Fri, Sep 23
           Compiler roughly at first, then spend more time on frequently executed pieces (i.e. optimize)
         JIT compilation
 
+
 Mon, Sep 26
   Binding
     - Associating two things, especially associating some property with an identifier from the program
@@ -328,6 +331,7 @@ Fri, Sep 30
   Assignment
     val x = 1+2*3 ==> "val x = 7 : int"
     val y = if x = 7 then 1.0 else 2.0
+
 
 Mon, Oct 3
   You can define a new variable with the same name as an old one, even a different type
@@ -480,6 +484,7 @@ Fri, Oct 7
       In C:
         enum coin { penny = 1, nickel = 5, dime = 10, quarter = 25  };
 
+
 Mon, Oct 10
   Operations on Enumeration Values
     ```SML
@@ -585,6 +590,7 @@ Fri, Oct 21
   Operations on function values
     We need to call functions
     Many languages support nothing beyond function call
+
 
 Mon, Oct 24
   Classes
@@ -734,3 +740,72 @@ Fri, Oct 28
           in
             (a::x, b::y)
           end;
+
+
+Wed, Nov 2
+  Comments: delimited by * and *
+
+Fri, Nov 4
+  Polymorphism
+    - Functions with extra flexibility in types are called polymorphic
+    - Applies to a wide variety of language features
+  Overloading
+    An overloaded function or operator is one that has at least two definitions, all of different types
+    Many languages have overloaded operators
+    Some allow programmer to define new overloaded function names as operators
+  Predefind overloaded operators
+    ML: val x = 1 + 2;
+        val y = 1.0 + 2.0
+  Adding to overloaded operators
+    Somve languages, like C++, allow additional meanings to be defined for operators
+    class complex {
+      double rp, ip;
+    public:
+      complex(double r, double i) {rp = r; ip = i;}
+      friend complex operator+(complex, complex);
+      friend complex operator*(complex, complex);
+    }
+  Operator overloading
+    C++ lets you overload virtually any operator
+    Overloading function names
+      - No big deal
+  How to eliminate overloading
+    Compiler can't actually give 2 functions same name. Instead modify function names
+    - int square_i(int x);
+    - double square_d(double x);
+  
+
+Mon, Nov 7
+  Type Coercion
+    Coercion is an implicit type conversion, supplied automatically even if the rpgrammer leaves it out
+    In Java:
+      double x; x = (double) 2  // Explicit
+      double x; x = 2;          // Implicit
+  Parameter Coercion
+    Languages support different coercions in different contexts: assignments, other binary operations, unary operations, parameters
+    When a language supports coercion of parameters on a function call, the resulting function (or operator) is polymorphic
+  Defining Coercions
+    Language definitions often take many pages to define exactly which coercions are performed
+    Some languages have very extensive powers of coercion, while some have none
+    Some (like Java) lie in the middle
+  Coercion and Overloading: Tricky Interactions
+    There are potentially tricky interactions between overloadign and coercion
+      - Overloading uses the types to choose the definiion
+      - Coercion uses the definition to choose a type conversion
+  Parametric Polymorphism
+    - A function exhibits parametric polymorphism if it has a type that contains one or more type variables
+    - A type with type variables is a polytype
+    - Found in languages including ML, C++, Ada, and Java
+  Implementing Parametric Polymorphism
+    - One extreme: many copies
+      Create a set of monomorphic implementations, one for each type parameter the compiler sees
+    - Other extreme: one copy
+      Create one implementation, and use it for al 
+  Subtype Polymorphism  
+    A function or operator exhibits it subtype polymorphism if one or more of its parameter types have subtypes
+    Important source of polymorphism in languages with a rich structure of subtypes
+    Especially object-oriented languages
+  Definition of Polymorphic
+    A function or operator is polymorphic if it has at least two possible types
+      - It exhibits ad hoc polymorphism if it has at least two but only finitely many possible types
+      - It exhibits universal polymorphism if it has infinitely many possible types
