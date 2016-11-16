@@ -8,11 +8,9 @@
 %union {
     double dval;
     struct sym * symptr;
-    struct constant * constptr;
 }
 
 %token <symptr> NAME
-%token <symptr> CONST
 %token <dval> NUMBER
 %left '-' '+'
 %left '*' '/'
@@ -46,7 +44,6 @@ expression
 
 struct sym * sym_lookup(char * s, int constant)
 {
-    char * p;
     struct sym *sp;
 
     sp = sym_tbl;
@@ -78,21 +75,19 @@ struct sym * sym_lookup(char * s, int constant)
 
 // Recursively iterates through the given tree and counts the number of nodes
 int count_vals(struct sym *sp) {
-    if (sp->name == NULL) {
-        return 0;
+    if (sp->name != NULL) {
+        return 1 + count_vals(sp->left) + count_vals(sp->right);
     }
-    return 1 + count_vals(sp->left) + count_vals(sp->right);
+    return 0;
 }
 
 // Recursively iterates through the given tree and prints the names/values in order
 int print_vals(struct sym *sp) {
-    if (sp->name == NULL) {
-        return 0;
+    if (sp->name != NULL) {
+        print_vals(sp->right);
+        printf("        %s => %lg\n", sp->name, sp->value);
+        print_vals(sp->left);
     }
-
-    print_vals(sp->right);
-    printf("        %s => %lg\n", sp->name, sp->value);
-    print_vals(sp->left);
 }
 
 // Provides info about symbols by calling count_vals and print_vals

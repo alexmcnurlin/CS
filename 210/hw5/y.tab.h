@@ -46,16 +46,14 @@ extern int yydebug;
   enum yytokentype
   {
     NAME = 258,
-    CONST = 259,
-    NUMBER = 260,
-    UMINUS = 261
+    NUMBER = 259,
+    UMINUS = 260
   };
 #endif
 /* Tokens.  */
 #define NAME 258
-#define CONST 259
-#define NUMBER 260
-#define UMINUS 261
+#define NUMBER 259
+#define UMINUS 260
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -66,9 +64,8 @@ union YYSTYPE
 
     double dval;
     struct sym * symptr;
-    struct constant * constptr;
 
-#line 72 "y.tab.h" /* yacc.c:1909  */
+#line 69 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
