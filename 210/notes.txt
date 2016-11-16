@@ -809,3 +809,68 @@ Mon, Nov 7
     A function or operator is polymorphic if it has at least two possible types
       - It exhibits ad hoc polymorphism if it has at least two but only finitely many possible types
       - It exhibits universal polymorphism if it has infinitely many possible types
+
+Fri, Nov 11
+  Prolog
+    Logical Programming language
+    Types: Constants
+      Integer constants: 123
+      Real constants: 1.23
+      Atoms: A lowercase letter followed by any number of additional letters
+        - Also can include non-alphanumeric characters * . = @ # $
+        - Plus a few special atoms []
+      Atoms are not variables, but more like a string constant
+      Variables
+        Any name beginning with uppercase letter or an underscore, followed by additional letters, digits, or underscores
+        Those starting with Underscore get special treatment
+
+
+Mon, Nov 14
+  Variables
+    Begin only with uppercase letter or underscore
+    Most variables begin with uppercase letter
+    Those starting with _ get special treatment
+    Anything else is an atom
+  Compound term
+    Atom followed by a parenthesized, comma-separated list of one or more terms
+      x(y,z), +(1,2), .(1,[]), parent(adam,seth), x(Y,x(Y,Z))
+  Terms
+    All Prolog programs and data are built from terms
+  Unification
+    Pattern matching using prolog terms
+    Two terms unify if there is some way of binding their variables that makes them identical
+    parent(adam,Child) and parent(Adameth) unify by binding variable Child to atom seth
+  Prolog Database
+    Prolog language system maintains collection of facts and rules of inference
+    Internal database that changes as Prolog language system runs
+    Prolog program is just a set of data for this database
+    Simplest kind of thing in the database is a *fact*: a term followed by a period
+  Consolut predicate
+    consult(relations).
+    File relations (or relations.pl) contains our parent facts
+  Simple Query
+    A query asks the language system to prove something
+    Some are true, some are false
+    Queries can take multiple lines
+    Periods denote end of query
+  Queries with variables
+    parent(herbert,jean).
+    parent(P,jean).
+    ==> P = herbert.
+    When a query with a variable is used, it prints the results
+  Multiple solutions
+    When multiple solutions are found, it prints the binding
+  Conjunctions
+    A conjunctive query has a list of query terms separated by commas
+    Prolog tries to prove them all
+    parent(Parent,kim), parent(Grandparent,Parent)
+    ==> Parent = margaret,
+    ==> Grandparent = esther ;
+    ==> Parent = margaret,
+    ==> Grandparent = herbert ;
+  Rules
+    greatgrandparent(GGP,GGC) :- 
+      parent(GGP,GP), 
+      parent(GP,P),
+      parent(P,GGC).
+    A rule says how to prove something. To prove head, prove conditions
