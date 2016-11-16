@@ -547,3 +547,33 @@ Fri, Nov 4
     ar: Creates an archive, usually a library
       - creates a .a file
       - Can be used with gcc to only bring in necessary subroutines, rather than the whole object file
+
+
+Mon, Nov 7
+  libc (.a, .so, .dll): Contains most standard libraries (printf, scanf, cin, cout, ect)
+  libm: Contains math libs
+
+Wed, Nov 9
+  Test on Friday!
+
+
+Mon, Nov 14
+  Makefiles
+    # comment
+    target: dependency1.c dependency2.c
+      build command
+    target2: dependency3.c dependency4.c
+      build command
+  Dependence Graph
+    Make creates a graph of dependencies, with the parent rule on top, and dependency rules on bottom
+  Make runs the first rule in the file by default
+    all: plot_prompt plot_win # This will tell the makefile to run the plot_prompt and plot_win rules
+  Clean
+    clean:
+      rm file1.trash ect # This rule can by run with `make clean` to clean up the directory
+  Macros
+    OBJS = file1 file2
+    OPTIONS = -cog
+
+    plot: ${OBJS}
+      gcc ${OPTIONS} ect...
