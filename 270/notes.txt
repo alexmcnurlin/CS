@@ -577,3 +577,24 @@ Mon, Nov 14
 
     plot: ${OBJS}
       gcc ${OPTIONS} ect...
+
+
+Fri, Dec 2
+  Sockets!
+    Sockets predate the internet, so they are built to be used on a variety of networks
+    One process acts as a client, the other as a server
+      - They might be on the same computer, they might be different
+      1) Server creates a socket
+      2) Client creates an unnamed socket and requests connection
+      3) Client makes a connection. Server retains original named socket
+    Domain: type of socket we want to create
+      - Supported domains include
+        * PF_local (the clients and server must be in the same machine, also called PF_UNIX)
+        * PF_INET (client and server are on the network)
+        * PF_INET6 (The clients and server are on an IPv6 network)
+    Types: type of socket determines type of communication that can exist between client and server
+      - Main types:
+        * SOCK_STREAM (TCP)
+        * SOCK_DGRAM (UDP)
+    socket() - returns unnamed socket
+    bind()   - Associates the unnamed socket represented by file descriptor fd with the socket address stored in address

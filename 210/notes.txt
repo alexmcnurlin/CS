@@ -845,7 +845,7 @@ Mon, Nov 14
     Internal database that changes as Prolog language system runs
     Prolog program is just a set of data for this database
     Simplest kind of thing in the database is a *fact*: a term followed by a period
-  Consolut predicate
+  Consult predicate
     consult(relations).
     File relations (or relations.pl) contains our parent facts
   Simple Query
@@ -874,3 +874,110 @@ Mon, Nov 14
       parent(GP,P),
       parent(P,GGC).
     A rule says how to prove something. To prove head, prove conditions
+
+Fri, Nov 18
+  Making your own queries
+    greatgrandparent(GGP,GGC) :-
+      parent(GGP, GP),
+      parent(GP, P),
+      parent(P, GGC).
+    There are intermediate goals
+      - The first goal is the initial query
+      - the next is what remains to be proved after transforming the first goal using one of the clauses (in this case, the greatgrandparent rule)
+      - And so on, until nothing remains to be proved
+  Recursive rules
+    ancestor(X,Y) :- parent(X,Y).
+    ancestor(x,Y) :-
+      parent(Z,Y),
+      ancestor(X,Z).
+  Syntactically, Prolog is a simple language
+
+
+Mon, Nov 28
+  Binding
+    * Variables are bound dynamically to values
+    * Those values must be stored somewhere
+    * Therefore, variables must somehow be bound to memory locations
+  Functional vs imperative
+    * Imperative languages expose the concept of memory locations (a = 0)
+    * Functional languages hide it (val a = 0)
+    * Both need to connect variables to values represented in memory
+  Function Activations
+    * The lifetime of one execution of a function, from call to corresponding return, is called an activation of the function
+    * When each activation has its own binding of a variable to a memory locations, it is an activation-specific variable
+  Activation specific variables
+    * Activation specific variables (those specific to the function activation) are the most common
+    * extern, auto, static, register and some other one are the ones in c
+  Block activation
+    * For block constructs that contain code, we can speak of an activation of the block
+    * Lifetime of execution of the block is the activation of the block
+    * A variable might be specific to an activation of a particular block within a function
+
+Wed, Nov 30
+  Scope and lifetime differ
+    Im most modern languages, variables with loca scope have activation-specific lifetimes, at leat by default
+    However, these two aspects can be separated, as in C:
+
+    int* nextcount() {
+      static int* count = 0;
+      count = count + 1;
+      return count;
+    }
+    int* p = nextcount();
+
+  Other Lifetimes for Variables
+    Object-oriented languages use variables whose lifetimes are associated with object lifetimes
+    Some languages have variables whose values are persistent: they last across multiple executions of the program
+    Today, we will focus on activation-specific variables
+
+  Activation Records
+    Language implementations usually allocate all the activation-specific variables of a function together as an activation record
+    The activation record also contains other activation-specific data, such as
+      - Return address: where to go in the program when this activation returns
+      - Link to caller's activation record
+  Block Activation records
+    When a blockk is entered, space must be found for the local variables of that block
+    Various possibilities
+      - Preallocate in the containing function's activation record
+      - Extend the function's activation record when the block is entered
+      - allocate separate block activation records
+  Static Allocation
+    - The simplest approach: allocate one activation record for every function, statically
+    - Older dialects of Fortran and Cobol used this system
+    - Simple and fast
+  Drawback
+    - Each function has one activation record
+    - There can be only one activation alive at a time
+    - Modern languages (including modern dialects of Cobol and Fortran) do no obey this restriction
+      * Recursion and Multithreading
+  Stacks of activation records
+    - To support recursion, we need to allocate a new activation record for each activation
+    - Dynamic allocation: activation record allocated when function is called
+    - For many languages, like C, it can be deallocated when the function returns
+    - A stack of activation records: stack frames pushed on call, popped on return
+  Current Activation Record
+    - Before, static: location of activation record was determined before runtime
+    - Now, dynamic: location of the current activation record is not known until runtime
+    - A function must know how to find the address of its current activation record
+    - Often, a machine register is reserved to hold this
+  Nesting functions
+    - This is adequate for many languages, including C
+    - Not for languages that allow this trick:
+      * Function definitions can ge nested inside other function definitions
+      * Inner functions can refer to local variables of the outer fuctions (under the usual block scoping rule)
+      * ML, Ada, Pacal...
+  The Problem
+    - How can an activation of the inner function find the activation record of the outer function
+    - It isn't necessarily the previous activation record, since the caller of the inner function may be another inner function
+    - Or it may call itself recursively
+  
+Fri, Dec 2
+  Nesting Link
+    - An inner function needs to be able to find the address of the most recent activation
+    - We can keep this nesting link in the activation record
+  Setting the nesting link
+    - Easy if there is only one level of nesting
+      * Calling outer function: set to null
+      * Calling from outer to inner: set nesting link same as caller's activation record
+      * Calling from inner to inner: set nesting link same as caller's nesting link
+    - More complicated with more levels of nesting
