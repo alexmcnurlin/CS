@@ -981,3 +981,21 @@ Fri, Dec 2
       * Calling from outer to inner: set nesting link same as caller's activation record
       * Calling from inner to inner: set nesting link same as caller's nesting link
     - More complicated with more levels of nesting
+
+
+Mon, Dec 5
+  Functions as parameters
+    * When you pass a function as a parameter, what really gets passed?
+    * Code must be part of it: source code, compiled code, pointer to code, or implementation in some other form
+  Many languages allow functions to be passed as parameters
+    * Functional languages allow many more kinds of operation on function-values
+      - passed as parameters, returned from functions, constructed expression
+    * function values include both parts: code to call, and nesting link to use when calling it
+  Conclusion
+    * The more sophisticated the language, the harder it is to bind activation-specific variables to memory locations
+      - Staic allocation: works for languages that permot onl one activation at a time (early Fortran, Cobol)
+      - Simple stack allocation: works for languages that do not allow nested functions (like C)
+
+Wed, Dec 7
+  Exam preview
+    1-8, 10, 12, 19
