@@ -1,0 +1,10 @@
+parent(elva, alex).
+parent(rick, alex).
+parent(neva, rick).
+parent(leonard, rick).
+parent(bryan, elva).
+parent(shirley, elva).
+
+grandparent(GP, ME) :-
+	parent(GP, P),
+	parent(P, ME).
